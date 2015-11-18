@@ -13,6 +13,10 @@ module.exports = router;
 // router.get('/', ensureAuthenticated, function (req, res, next) {
 
 // });
+router.use('/animals', require('./api/animals.router.js'));
+router.use('/sightings', require('./api/sightings.router.js'));
+router.use('/users', require('./api/users.router.js'));
+
 router.get('/', function (req, res, next) {
 
 });
