@@ -1,0 +1,57 @@
+{
+  "name": "sighting_app",
+  "version": "1.0.0",
+  "description": "an app for animal sightings",
+  "main": "01_server/start.js",
+  "scripts": {
+    "babel-node": "babel-node 01_server/start.js",
+    "start": "nodemon --watch server -e js,html --exec npm run babel-node"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "dependencies": {
+    "babel": "^6.1.18",
+    "babel-register": "^6.1.18",
+    "bluebird": "^2.9.34",
+    "body-parser": "^1.12.0",
+    "chai": "^2.1.0",
+    "chalk": "^1.0.0",
+    "connect-mongo": "^0.7.0",
+    "cookie-parser": "^1.3.4",
+    "express": "^4.12.0",
+    "express-session": "^1.10.3",
+    "flux": "^2.1.1",
+    "history": "^1.13.1",
+    "karma": "^0.13.14",
+    "karma-chai": "^0.1.0",
+    "karma-coverage": "^0.2.7",
+    "karma-mocha": "^0.1.10",
+    "karma-mocha-reporter": "^1.0.2",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "lodash": "^3.9.3",
+    "mocha-mongoose": "^1.0.3",
+    "mongodb": "^1.4.33",
+    "mongoose": "^4.0.7",
+    "nodemon": "^1.3.7",
+    "passport": "^0.2.1",
+    "passport-local": "^1.0.0",
+    "react": "^0.14.2",
+    "react-dom": "^0.14.2",
+    "react-router": "^1.0.0",
+    "react-tools": "^0.10.0",
+    "serve-favicon": "^2.2.0",
+    "sinon": "^1.13.0",
+    "supertest": "^0.15.0",
+    "webpack": "^1.12.6",
+    "webpack-dev-middleware": "^1.2.0",
+    "webpack-dev-server": "^1.12.1",
+    "webpack-hot-middleware": "^2.5.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.1.21",
+    "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.1.18",
+    "babel-preset-react": "^6.1.18"
+  }
+}
