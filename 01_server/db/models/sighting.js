@@ -6,13 +6,16 @@ var sightingSchema = new mongoose.Schema({
 
 	animal: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Animal'
+		ref: 'Animal',
+		required: true
 	},
 	location: {
-		type: [Number]
+		type: [Number],
+		required: true
 	},
 	time: {
-		type: Date
+		type: Date,
+		required: true
 	},
 
 	mediaFull: String,

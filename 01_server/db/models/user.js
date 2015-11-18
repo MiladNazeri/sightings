@@ -15,7 +15,7 @@ var userSchema = new mongoose.Schema({
         type: String
     },
     sighting: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: [mongoose.Schema.Types.ObjectId],
         ref: 'Sighting'
     },
     
