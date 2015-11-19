@@ -7,3 +7,11 @@ router.get('/', function (req, res, next) {
 			res.send(animals);
 		}, next)
 })
+
+router.post('/', function (req, res, next) {
+	Animal.create(req.body)
+		.then(function (result) {
+			res.send(result)
+		})
+		.then(null, next);
+})
