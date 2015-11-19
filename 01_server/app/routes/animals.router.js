@@ -1,5 +1,6 @@
 var router = require('express').Router();
 var mongoose = require('mongoose');
+var Animal = mongoose.model('Animal');
 
 router.get('/', function (req, res, next) {
 	Animal.find()
@@ -15,3 +16,5 @@ router.post('/', function (req, res, next) {
 		})
 		.then(null, next);
 })
+
+module.exports = router;

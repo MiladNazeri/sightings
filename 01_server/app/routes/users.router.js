@@ -1,5 +1,6 @@
 var router = require('express').Router();
 var mongoose = require('mongoose');
+var User = mongoose.model('User');
 
 router.post('/', function (req, res, next) {
 	User.create(req.body)
@@ -15,3 +16,5 @@ router.get('/:id', function (req, res, next) {
 			res.send(user);
 		}, next)
 })
+
+module.exports = router;

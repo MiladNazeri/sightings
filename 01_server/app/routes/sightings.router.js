@@ -1,6 +1,5 @@
 var router = require('express').Router();
 var mongoose = require('mongoose');
-
 var Sighting = mongoose.model('Sighting');
 
 router.get('/', function (req, res, next) {
@@ -23,3 +22,5 @@ router.get('/:id', function (req, res, next) {
 			res.send(sighting);
 		}, next)
 })
+
+module.exports = router;
