@@ -3,12 +3,10 @@ var mongoose = require('mongoose');
 var Animal = mongoose.model('Animal');
 
 router.get('/', function (req, res, next) {
-	res.send("oh yeah!");
-	console.log("did this work?")
-	// Animal.find()
-	// 	.then(function (animals) {
-	// 		res.send(animals);
-	// 	}, next);
+	Animal.find()
+		.then(function (animals) {
+			res.send(animals);
+		}, next);
 })
 
 router.post('/', function (req, res, next) {
