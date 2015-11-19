@@ -6,8 +6,7 @@ router.post('/', function (req, res, next) {
 	User.create(req.body)
 		.then(function (result) {
 			res.send(result)
-		})
-		.then(null, next);
+		}, next);
 })
 
 router.get('/:id', function (req, res, next) {

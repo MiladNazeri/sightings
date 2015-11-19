@@ -10,6 +10,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
+	req.body.time = Date.now();
 	Sighting.create(req.body)
 		.then(function (result) {
 			res.send(result);
