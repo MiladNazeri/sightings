@@ -8,7 +8,7 @@ const compiler = webpack(config);
 
 module.exports = function (app) {
 
-    app.use(express.static(__dirname + '/03_dist'));
+    app.use(express.static(__dirname + '/dist'));
     app.use(webpackMiddleware(compiler));
     app.use(webpackHotMiddleware(compiler));
     // app.get('/*', function response(req, res) {

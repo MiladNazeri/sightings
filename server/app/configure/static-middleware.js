@@ -8,8 +8,8 @@ module.exports = function (app) {
     var root = app.getValue('projectRoot');
 
     var npmPath = path.join(root, './node_modules');
-    var publicPath = path.join(root, './03_dist');
-    var srcPath = path.join(root, './02_src');
+    var publicPath = path.join(root, './dist');
+    var srcPath = path.join(root, './src');
 
     app.use(favicon(app.getValue('faviconPath')));
     app.use(express.static(npmPath));

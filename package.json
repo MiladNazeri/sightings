@@ -2,9 +2,9 @@
   "name": "sighting_app",
   "version": "1.0.0",
   "description": "an app for animal sightings",
-  "main": "01_server/start.js",
+  "main": "server/start.js",
   "scripts": {
-    "babel-node": "babel-node 01_server/start.js",
+    "babel-node": "babel-node server/start.js",
     "start": "nodemon --watch server -e js,html --exec npm run babel-node"
   },
   "engines": {
