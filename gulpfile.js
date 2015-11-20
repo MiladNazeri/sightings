@@ -22,13 +22,13 @@ var istanbul = require('gulp-istanbul');
 // --------------------------------------------------------------
 //
 //
-gulp.task('reload', function () {
-    livereload.reload();
-});
+// gulp.task('reload', function () {
+//     livereload.reload();
+// });
 
-gulp.task('reloadCSS', function () {
-    return gulp.src('./dist/style.css').pipe(livereload());
-});
+// gulp.task('reloadCSS', function () {
+//     return gulp.src('./dist/style.css').pipe(livereload());
+// });
 
 
 gulp.task('lintJS', function () {
@@ -102,6 +102,8 @@ gulp.task('seedDB', function () {
     });
 
 });
+
+
 
 
 gulp.task('default', function () {
