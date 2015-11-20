@@ -12,7 +12,6 @@ module.exports = {
     publicPath: '/dist/public'
   },
   plugins: [
-    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       minimize: true,
       compress: {
@@ -27,15 +26,9 @@ module.exports = {
     loaders: [
       { test: /\.jsx$/,
         loader: 'babel',
-        query: {
-                         presets: ['es2015', 'react']
-                    },
         include: path.join(__dirname, 'src') },
       { test: /\.js$/,
         loader: 'babel',
-        query: {
-                         presets: ['es2015', 'react']
-                    },
         exclude: /node_modules/ },
       { test: /\.scss?$/,
         loader: 'style!css!sass',
