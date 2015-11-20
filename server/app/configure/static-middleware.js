@@ -8,7 +8,7 @@ module.exports = function (app) {
     var root = app.getValue('projectRoot');
 
     var npmPath = path.join(root, './node_modules');
-    var publicPath = path.join(root, './dist/public');
+    var publicPath = path.join(root, './public');
     var srcPath = path.join(root, './src');
 
     app.use(favicon(app.getValue('faviconPath')));

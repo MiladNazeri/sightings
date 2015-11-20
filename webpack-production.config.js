@@ -8,9 +8,9 @@ module.exports = {
     "./src/js/main.js"
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'public'),
     filename: 'bundle.js',
-    publicPath: path.join(__dirname, 'dist/public/')
+    publicPath: '/public/'
   },
   plugins: [
     new webpack.optimize.UglifyJsPlugin({
