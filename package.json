@@ -4,8 +4,7 @@
   "description": "an app for animal sightings",
   "main": "server/start.js",
   "scripts": {
-    "babel-node": "babel-node server/start.js",
-    "start": "nodemon --watch server -e js,html --exec npm run babel-node"
+    "start": "nodemon --watch server -e js,html"
   },
   "engines": {
     "node": ">=4.0.0"
