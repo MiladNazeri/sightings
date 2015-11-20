@@ -5,7 +5,7 @@ console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! this is being run")
 module.exports = {
   devtool: 'source-map',
   entry: [
-    "./src/js/main.js"
+    path.join(__dirname, 'src/js/main.js')
   ],
   output: {
     path: path.join(__dirname, 'public'),
