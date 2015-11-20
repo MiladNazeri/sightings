@@ -29,7 +29,7 @@ app.use(function (req, res, next) {
 });
 
 app.get('/*', function response(req, res) {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
+  res.sendFile(app.get('indexHTMLPath'));
 });
 
 // app.get('/*', function (req, res) {
