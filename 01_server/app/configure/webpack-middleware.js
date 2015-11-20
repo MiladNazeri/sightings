@@ -11,8 +11,8 @@ module.exports = function (app) {
     app.use(express.static(__dirname + '/03_dist'));
     app.use(webpackMiddleware(compiler));
     app.use(webpackHotMiddleware(compiler));
-    app.get('/*', function response(req, res) {
-      res.sendFile(path.join(__dirname, '03_dist/index.html'));
-    });
+    // app.get('/*', function response(req, res) {
+    //   res.sendFile(path.join(__dirname, '03_dist/index.html'));
+    // });
 
 }
