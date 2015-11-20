@@ -4,9 +4,7 @@ console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! this is being run")
 
 module.exports = {
   devtool: 'source-map',
-  entry: [
-    path.join(__dirname, 'src/js/main.js')
-  ],
+  entry: './src/js/main',
   output: {
     path: path.join(__dirname, 'public'),
     filename: 'bundle.js',
