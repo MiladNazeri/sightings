@@ -28,6 +28,10 @@ app.use(function (req, res, next) {
 
 });
 
+app.get('/*', function response(req, res) {
+  res.sendFile(path.join(__dirname, '03_dist/index.html'));
+});
+
 // app.get('/*', function (req, res) {
 //     res.sendFile(app.get('indexHTMLPath'));
 // });
