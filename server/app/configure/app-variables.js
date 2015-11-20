@@ -22,5 +22,6 @@ module.exports = function (app) {
     app.setValue('projectRoot', rootPath);
     app.setValue('indexHTMLPath', indexPath);
     app.setValue('faviconPath', faviconPath);
+    console.log(faviconPath)
     app.setValue('log', logMiddleware);
 };
