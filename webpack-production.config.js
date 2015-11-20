@@ -23,12 +23,14 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.jsx$/,
-        loader: 'babel',
-        include: path.join(__dirname, 'src') },
-      { test: /\.js$/,
-        loader: 'babel',
-        exclude: /node_modules/ },
+        {
+             test: /\.jsx?$/,
+             exclude: /(node_modules|bower_components)/,
+             loader: 'babel',
+             query: {
+                  presets: ['es2015', 'react']
+             }
+        },
       { test: /\.scss?$/,
         loader: 'style!css!sass',
         include: path.join(__dirname, 'css') },
