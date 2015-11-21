@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom';
 import App from './components/app';
 import { Router, Route, Link, IndexRoute } from 'react-router';
 import Dashboard from './components/dashboard';
+import Default from './components/default'
 
 // testing the router as the main render
 ReactDOM.render((
   <Router>
-    <Route path="/" component={App}>
-      <Route path="dashboard/:id" component={Dashboard} />
+    <Route path="/" component={Default}>
+      <IndexRoute component={App}/>
+      <Route path="/dashboard" component={Dashboard} />
     </Route>
   </Router>
 ), document.getElementById('main'));

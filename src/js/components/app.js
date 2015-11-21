@@ -1,22 +1,6 @@
-// import React from 'react';
-// import AppActions from '../actions/app-actions';
-// import Template from './app-template';
-// import { Router, Route, IndexRoute } from 'react-router';
-//
-// export default () => {
-//     return (
-//         <Router>
-//             <Route path="/" component={Template}>
-//                 <IndexRoute component={ null } />
-//                 <Route path="" component={ null } />
-//                 <Route path="item/:item" component={ null } />
-//             </Route>
-//         </Router>
-//     );
-// }
-
 import React from 'react';
 import { Router, Route, Link } from 'react-router';
+import Dashboard from './dashboard.js';
 
 //material-ui components
 import TextField from 'material-ui/lib/text-field';
@@ -50,7 +34,7 @@ export default class App extends React.Component {
   render() {
     return (
         <div style={styles.mainContainer}>
-          <h1>Welcome to Sightings</h1>
+          <p>Go to the <Link to="/dashboard">Dashboard</Link></p>
             <Card style={styles.card}>
               <Tabs>
                 <Tab label="Login">
@@ -76,6 +60,7 @@ export default class App extends React.Component {
                 </Tab>
               </Tabs>
             </Card>
+            {this.props.children || "Welcome to the sightings app"}
         </div>
     )
   }
@@ -92,6 +77,7 @@ var styles = {
     width: '25%',
   },
   loginFields: {
-    marginLeft: 10
+    marginLeft: 10,
+    marginBottom: 30
   }
 };
