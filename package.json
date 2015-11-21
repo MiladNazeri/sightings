@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "description": "an app for animal sightings",
   "main": "server/start.js",
+  "babel": {
+    "presets": [
+        "es2015",
+        "react"
+    ]
+  },
   "scripts": {
     "postinstall": "webpack --config ./webpack-production.config.js --progress --colors",
     "start": "node server/start"
@@ -12,7 +18,10 @@
   },
   "dependencies": {
     "babel": "^5.8.20",
-    "babel-core": "^6.2.1",
+    "babel-core": "^6.1.21",
+    "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.1.18",
+    "babel-preset-react": "^6.1.18",
     "bluebird": "^2.9.34",
     "body-parser": "^1.12.0",
     "chai": "^2.1.0",
@@ -44,6 +53,7 @@
     "karma-mocha-reporter": "^1.0.2",
     "karma-phantomjs-launcher": "^0.1.4",
     "lodash": "^3.9.3",
+    "material-ui": "^0.13.3",
     "mocha-mongoose": "^1.0.3",
     "mongodb": "^1.4.33",
     "mongoose": "^4.0.7",
@@ -53,6 +63,7 @@
     "react": "^0.14.2",
     "react-dom": "^0.14.2",
     "react-router": "^1.0.0",
+    "react-tap-event-plugin": "^0.2.1",
     "react-tools": "^0.10.0",
     "run-sequence": "^1.0.2",
     "serve-favicon": "^2.2.0",
@@ -60,13 +71,10 @@
     "supertest": "^0.15.0",
     "webpack": "^1.12.6",
     "webpack-dev-middleware": "^1.2.0",
-    "webpack-hot-middleware": "^2.5.0",
-    "babel-core": "^6.1.21",
-    "babel-loader": "^6.2.0",
-    "babel-preset-es2015": "^6.1.18",
-    "babel-preset-react": "^6.1.18"
+    "webpack-hot-middleware": "^2.5.0"
   },
   "devDependencies": {
+    "react-hot-loader": "^1.3.0",
     "webpack-dev-server": "^1.12.1"
   }
 }
