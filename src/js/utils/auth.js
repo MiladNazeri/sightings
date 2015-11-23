@@ -1,3 +1,5 @@
+import api from "../api/api.js"
+
 module.exports = {
     login(email, pass, cb){
         cb = arguments[arguments.length-1]
@@ -6,9 +8,14 @@ module.exports = {
             this.onChange(true)
             return
         }
-        pretendRequest(email, pass, (res) => {
-            if (res.authenticated) {
-                localStorage.token = res.token
+        var loginObject = {
+            email: email,
+            password: pass
+        }
+        api.loginUser(loginObject)
+        .then( (res) => {
+            if (res) {
+                localStorage.token = res.data.user.id
                 if (cb) cb(true)
                 this.onChange(true)
             } else {
@@ -21,25 +28,16 @@ module.exports = {
         return localStorage.token
     },
     logout(cb){
+        api.logoutUser().then( () => {
         delete localStorage.token
         if (cb) cb()
         this.onChange(false)
+
+})
+
     },
     loggedIn(cb){
         return !!localStorage.token
     },
     onChange() {}
-}
-
-function pretendRequest(email, pass, cb) {
-    setTimeout( () => {
-        if (email === "joe@example.com" && pass === 'password1') {
-            cb({
-                authenticated: true,
-                token: Math.random().toString(36).substring(7)
-            })
-        } else {
-            cb({ autheticated: false})
-        }
-    }, 0)
 }

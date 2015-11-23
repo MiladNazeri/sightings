@@ -61,7 +61,7 @@ userSchema.set('toJSON', {
     transform: function(doc, ret, options) {
         var retJson = {
             email: ret.email,
-            id: ret.registered,
+            id: ret._id,
             name: ret.name,
             sighting: ret.sighting,
             group: ret.group

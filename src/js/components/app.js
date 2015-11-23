@@ -33,47 +33,7 @@ export default class App extends React.Component {
     this.handleChangeToEmail = this.handleChangeToEmail.bind(this);
     this.handleChangeToPassword = this.handleChangeToPassword.bind(this)
   }
-  login(email, password, cb){
-      cb = arguments[arguments.length-1]
-      if (this.state.session.user) {
-          if (cb) cb(true)
-          this.onChangeHandler(true)
-          return
-      }
-      var loginObject = {
-          email: email,
-          password: password
-      }
-      api.loginUser(loginObject)
-      .then(res => {
-          this.createSession(res.data._id, res.data.email)
-          if (cb) cb(true)
-          this.onChangeHandler(true)
-      })
-      .catch(function(error){
-          if (cb) cb(false)
-          this.onChangeHandler(false)
-      })
-  onChangeHandler(change){
-    this.setState({
-      onChange: change
-    })
-  }
-  getSession(){
-    return this.state.session
-  }
-  createSession(sessionId,user){
-    this.setState({
-      session.id: sessionId,
-      session.user: user
-    })
-  }
-  destroySession(){
-    this.setState({
-      session.id: null,
-      session.user: null
-    })
-  }
+
   handleChangeToEmail(event) {
     this.setState({
       email: event.target.value
@@ -90,7 +50,7 @@ export default class App extends React.Component {
      var email = this.state.email;
      var password = this.state.password;
 
-    this.login(email,password, (loggedIn) => {
+    auth.login(email,password, (loggedIn) => {
       if(!loggedIn)
         return this.setState({ error: true })
 
