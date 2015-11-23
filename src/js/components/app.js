@@ -39,11 +39,13 @@ export default class App extends React.Component {
       email: event.target.value
     });
   }
+
   handleChangeToPassword(event) {
     this.setState({
       password: event.target.value
     });
   }
+
   submitLogin(){
     event.preventDefault()
 
@@ -59,6 +61,7 @@ export default class App extends React.Component {
       if (location.state && location.state.nextPathname) {
           this.context.history.replaceState(null, location.state.nextPathname)
       } else {
+          console.log("replaceState dashboard")
           this.context.history.replaceState(null, '/dashboard')
       }
 
@@ -71,14 +74,23 @@ export default class App extends React.Component {
       email: this.state.email,
       password: this.state.password
     }
-    api.createUser(loginObject)
-    .then(res => {
-      console.log(res)
-      this.context.history.pushState(null, '/dashboard')
-      } )
-    .catch(error => console.log("error ", error))
+    var email = this.state.email;
+    var password = this.state.password;
+    auth.signup(email, password, (loggedIn) => {
+      if(!loggedIn)
+        return this.setState({ error: true })
 
-}
+      const { location } = this.props
+
+      if (location.state && location.state.nextPathname) {
+          this.context.history.replaceState(null, location.state.nextPathname)
+      } else {
+          console.log("replaceState dashboard")
+          this.context.history.replaceState(null, '/dashboard')
+      }
+    })
+  }
+
   render() {
     return (
         <div style={styles.mainContainer}>

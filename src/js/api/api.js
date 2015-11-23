@@ -12,7 +12,7 @@ var api = {
         return axios.get(`${url}/getsession/`)
     },
     createUser(user) {
-        return axios.post(`${url}/users/`, user)
+        return axios.post(`${url}users/`, user)
     },
     getUser(userid) {
         return axios.get(`${url}/users/${userid}`)
