@@ -11,7 +11,7 @@ var api = {
     getSession() {
         return axios.get(`${url}/getsession/`)
     },
-    createUser() {
+    createUser(user) {
         return axios.post(`${url}/users/`, user)
     },
     getUser(userid) {
