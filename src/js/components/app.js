@@ -1,6 +1,9 @@
 import React from 'react';
 import { Router, Route, Link } from 'react-router';
 import Dashboard from './dashboard.js';
+import ReactDOM from 'react-dom';
+import api from '../api/api.js';
+import auth from "../utils/auth.js"
 
 //material-ui components
 import TextField from 'material-ui/lib/text-field';
@@ -10,27 +13,72 @@ import Card from 'material-ui/lib/card/card';
 import CardActions from 'material-ui/lib/card/card-actions';
 import CardText from 'material-ui/lib/card/card-text';
 import CardTitle from 'material-ui/lib/card/card-title';
+import FlatButton from 'material-ui/lib/flat-button';
 
 export default class App extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
     this.state = {
       count: 0,
-      username: '',
+      email: '',
       password: '',
       isLoading: false,
+      error: false,
+      session: {
+        id: null,
+        user: null
+      },
+      onChange: false
     };
+    this.handleChangeToEmail = this.handleChangeToEmail.bind(this);
+    this.handleChangeToPassword = this.handleChangeToPassword.bind(this)
   }
+
   handleChangeToEmail(event) {
     this.setState({
-      username: event.nativeEvent.text
+      email: event.target.value
     });
   }
   handleChangeToPassword(event) {
     this.setState({
-      password: event.nativeEvent.text
+      password: event.target.value
     });
   }
+  submitLogin(){
+    event.preventDefault()
+
+     var email = this.state.email;
+     var password = this.state.password;
+
+    auth.login(email,password, (loggedIn) => {
+      if(!loggedIn)
+        return this.setState({ error: true })
+
+      const { location } = this.props
+
+      if (location.state && location.state.nextPathname) {
+          this.context.history.replaceState(null, location.state.nextPathname)
+      } else {
+          this.context.history.replaceState(null, '/dashboard')
+      }
+
+    })
+
+  }
+
+  submitSignUp(){
+    var loginObject = {
+      email: this.state.email,
+      password: this.state.password
+    }
+    api.createUser(loginObject)
+    .then(res => {
+      console.log(res)
+      this.context.history.pushState(null, '/dashboard')
+      } )
+    .catch(error => console.log("error ", error))
+
+}
   render() {
     return (
         <div style={styles.mainContainer}>
@@ -39,23 +87,41 @@ export default class App extends React.Component {
               <Tabs>
                 <Tab label="Login">
                   <div style={styles.loginFields}>
-                    <TextField
-                      //hintText="Username"
-                      floatingLabelText="Username"
+                    <h3>Email:</h3>
+                    <input
                       type="text"
-                      value={this.state.username}
-                      onChange={this.handleChangeToEmail.bind(this)}/>
+                      value={this.state.email}
+                      onChange={this.handleChangeToEmail}
+                    />
                     <br/>
-                    <TextField
-                      floatingLabelText="Password"
+                    <h3>Password</h3>
+                    <input
                       type="password"
                       value={this.state.password}
-                      onChange={this.handleChangeToPassword.bind(this)}/>
+                      onChange={this.handleChangeToPassword}
+                    />
+                    <br />
+                    <button onClick={this.submitLogin.bind(this)}>Submit</button>
+                    {this.state.error && (<p>Bad login information</p>)}
                   </div>
                 </Tab>
                 <Tab label="Sign Up">
-                  <div>
-                    <h2>This is the Sign up Form</h2>
+                  <div style={styles.loginFields}>
+                    <h3>Email:</h3>
+                    <input
+                      type="text"
+                      value={this.state.email}
+                      onChange={this.handleChangeToEmail}
+                    />
+                    <br/>
+                    <h3>Password</h3>
+                    <input
+                      type="password"
+                      value={this.state.password}
+                      onChange={this.handleChangeToPassword}
+                    />
+                    <br />
+                    <button onClick={this.submitSignUp.bind(this)}>Submit</button>
                   </div>
                 </Tab>
               </Tabs>
@@ -81,3 +147,9 @@ var styles = {
     marginBottom: 30
   }
 };
+
+App.contextTypes = {
+  location: React.PropTypes.object,
+  history: React.PropTypes.object
+}
+

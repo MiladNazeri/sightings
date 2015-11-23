@@ -11,12 +11,13 @@
   },
   "scripts": {
     "postinstall": "webpack --config ./webpack-production.config.js --progress --colors",
-    "start": "node server/start"
+    "start": "nodemon --watch server -e js,html server/start.js"
   },
   "engines": {
     "node": ">=4.0.0"
   },
   "dependencies": {
+    "axios": "^0.7.0",
     "babel": "^5.8.20",
     "babel-core": "^6.1.21",
     "babel-loader": "^6.2.0",

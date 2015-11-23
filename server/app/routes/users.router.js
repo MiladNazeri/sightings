@@ -5,9 +5,10 @@ var User = mongoose.model('User');
 router.post('/', function (req, res, next) {
 	User.create(req.body)
 		.then(function (result) {
-			res.send(result)
-		}, next);
-})
+            return res.send(result)
+        }, next)
+});
+
 
 router.get('/:id', function (req, res, next) {
 	User.findById(req.params.id)

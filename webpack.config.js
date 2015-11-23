@@ -11,6 +11,11 @@ module.exports = {
      plugins: [
       new webpack.HotModuleReplacementPlugin()
     ],
+    resolve: {
+        modulesDirectories: ['node_modules'],
+        alias: {},
+        extensions: ['', '.jsx', '.js']
+      },
     module: {
       loaders: [{
           test: /\.(js|jsx|babel)$/,

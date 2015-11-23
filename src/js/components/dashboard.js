@@ -1,4 +1,5 @@
 import React from 'react';
+import auth from "../utils/auth.js"
 
 export default class Dashboard extends React.Component {
   constructor() {
