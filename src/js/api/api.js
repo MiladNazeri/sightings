@@ -6,12 +6,12 @@ var api = {
         return axios.post('login/', user)
     },
     logoutUser() {
-        return axios.get(`${url}/logout/userid/`)
+        return axios.get('logout/')
     },
     getSession() {
         return axios.get(`${url}/getsession/`)
     },
-    createUser() {
+    createUser(user) {
         return axios.post(`${url}/users/`, user)
     },
     getUser(userid) {

@@ -5,7 +5,7 @@ var Sighting = mongoose.model('Sighting');
 
 var userSchema = new mongoose.Schema({
 
-    name: { 
+    name: {
         type: String
     },
     email: {
@@ -18,7 +18,7 @@ var userSchema = new mongoose.Schema({
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'Sighting'
     },
-    
+
     group: String,
 
     salt: {
@@ -57,4 +57,16 @@ userSchema.method('correctPassword', function (candidatePassword) {
     return encryptPassword(candidatePassword, this.salt) === this.password;
 });
 
+userSchema.set('toJSON', {
+    transform: function(doc, ret, options) {
+        var retJson = {
+            email: ret.email,
+            id: ret._id,
+            name: ret.name,
+            sighting: ret.sighting,
+            group: ret.group
+        };
+        return retJson;
+    }
+});
 mongoose.model('User', userSchema);
