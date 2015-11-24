@@ -10,7 +10,6 @@
     ]
   },
   "scripts": {
-    "postinstall": "webpack --config ./webpack-production.config.js --progress --colors",
     "start": "nodemon --watch server -e js,html server/start.js"
   },
   "engines": {
