@@ -9,7 +9,8 @@ module.exports = {
           publicPath: '/public/'
      },
      plugins: [
-      new webpack.HotModuleReplacementPlugin()
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.ProvidePlugin({$: "jquery"}) // check if this works before committing, also add in jquery to index.html
     ],
     resolve: {
         modulesDirectories: ['node_modules'],
@@ -20,7 +21,7 @@ module.exports = {
       loaders: [{
           test: /\.(js|jsx|babel)$/,
           exclude: /(node_modules|bower_components)/,
-          // saving the "include" properties in case we need them later 
+          // saving the "include" properties in case we need them later
           //include: "/Users/Amit/Dropbox/Coding/FullStack/sightings/node_modules/react-googlemaps/src/ui/components/*.js",
           // include: [
           //   path.resolve(__dirname, 'server'),
