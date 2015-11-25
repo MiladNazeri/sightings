@@ -16,6 +16,7 @@
     "node": ">=4.0.0"
   },
   "dependencies": {
+    "aws-sdk": "^2.2.19",
     "axios": "^0.7.0",
     "babel": "^5.8.20",
     "babel-core": "^6.1.21",
@@ -64,6 +65,7 @@
     "react-dom": "^0.14.2",
     "react-googlemaps": "^0.4.0",
     "react-router": "^1.0.0",
+    "react-s3-uploader": "^1.2.0",
     "react-tap-event-plugin": "^0.2.1",
     "react-tools": "^0.10.0",
     "reactify": "^1.1.1",

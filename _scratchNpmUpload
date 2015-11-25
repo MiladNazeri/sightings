@@ -1,0 +1,76 @@
+var ReactS3Uploader = require('react-s3-uploader');
+
+<ReactS3Uploader
+    signingUrl="/s3/sign"
+    accept="image/*"
+    onProgress={this.onUploadProgress}
+    onError={this.onUploadError}
+    onFinish={this.onUploadFinish}
+    signingUrlHeaders={{ additional: headers }}
+    signingUrlQueryParams={{ additional: query-params }}
+    uploadRequestHeaders={{ 'x-amz-acl': 'public-read' }}
+    contentDisposition="auto" />
+
+    ACL - ?
+
+     /s3/sign <--- return JSON w signedUrl
+
+     contentDisposition - inline, attachment, auto
+
+     <input type="file" onChange={this.uploadfile} />
+
+     -when file is chosen, it will be uploaded to S3
+     -you can listen for progress - create a status bar
+     by providing an onProgress function to the component
+
+     answer calls to /s3/sign
+
+     app.use('/s3', require('react-s3-uploader/s3router')({
+        bucket: "MyS3Bucket",
+        region: 'us-east-1',
+        ACL: 'private'
+     }))
+
+     GET /s3/img/(.*)
+     GET /s3/uploads/(.*)
+     Creates a temporary URL that provides access to the uploaded file
+     The request is then readirected to the URL, so that the image is served
+     to the client
+
+     aws-sdk
+     Access Key
+     Secret Access Key
+     AWS_ACCESS_KEY_ID
+     AWS_SECRET_ACCESS_KEY
+
+
+     -------------------------------------
+     form - post - to the endpoint of the bucket
+     --set in multipart form
+
+     submits -
+        bucket
+        key - where the file is going to be stored
+            you can use ${filename} here
+            add a prefix
+        AWSAccessKeyID - the access key id for the account
+        policy - the policy document.
+        signatur - taking policy doc, base 64 encodng, computing the hmac-sha1 sig using your secret key and then base 64 encoding it
+        File - submitted as file
+
+        x-amz-security-token: If IAM temp credentials then you need to stick your session token here
+        Success_action_redirect -
+        success_action_status - 204 blank doc
+        201 - xml describing upload
+        x-amz-server-side-encription - S3 enecption
+        acl-
+        Content-Disposition
+        Content-Encoding
+        Content-Type
+        x-amz-meta
+        ${filename}
+
+        polcy - json object / content length restriction
+            array with 3 values, operator,keyname, and operand
+
+
