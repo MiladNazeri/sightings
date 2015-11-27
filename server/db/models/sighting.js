@@ -19,8 +19,13 @@ var sightingSchema = new mongoose.Schema({
 	},
 
 	mediaFull: String,
-	
-	mediaThumbnail: String
+
+	mediaThumbnail: String,
+
+	userId: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User'
+	}
 
 });
 

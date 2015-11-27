@@ -32,6 +32,7 @@
     "cookie-parser": "^1.3.4",
     "express": "^4.12.0",
     "express-session": "^1.10.3",
+    "fancy-react-s3-uploader": "0.0.31",
     "flux": "^2.1.1",
     "gulp": "^3.8.11",
     "gulp-babel": "^5.1.0",

@@ -5,6 +5,10 @@ var fs = require('fs')
 //
 //
 //
+router.use('/animals', require('./animals.router.js'));
+router.use('/sightings', require('./sightings.router.js'));
+router.use('/users', require('./users.router.js'));
+
     var AWS_ACCCES_KEY_ID = fs.readFileSync(__dirname + '/../../../key.pem').toString();
     var AWS_SECRET_ACCESS_KEY = fs.readFileSync(__dirname + '/../../../cert.pem').toString();
     var S3_BUCKET = "mobyclick";
@@ -12,9 +16,6 @@ var fs = require('fs')
     aws.config.update({accessKeyId: AWS_ACCCES_KEY_ID  , secretAccessKey: AWS_SECRET_ACCESS_KEY });
     aws.config.update({region: 'us-west-2' , signatureVersion: 'v4' });
 
-    router.use('/animals', require('./animals.router.js'));
-    router.use('/sightings', require('./sightings.router.js'));
-    router.use('/users', require('./users.router.js'));
 
 
     router.post('/sign_s3', function(req,res){

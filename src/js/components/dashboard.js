@@ -1,13 +1,102 @@
 import React from 'react';
-import auth from "../utils/auth.js"
+import auth from "../utils/auth.js";
+import axios from 'axios';
+import api from '../api/api.js';
+
 
 export default class Dashboard extends React.Component {
   constructor() {
     super();
     this.state = {
       map: null,
-      bounds: new google.maps.LatLngBounds()
+      bounds: new google.maps.LatLngBounds(),
+      lat: "",
+      long: "",
+      animal: "",
+      imagePath: "",
+      uploading: false,
+      uploaded: true,
+      filename: "",
+      filetype: ""
     };
+    this.updateCoordinatesLat = this.updateCoordinatesLat.bind(this)
+    this.updateCoordinatesLong = this.updateCoordinatesLong.bind(this)
+    this.updateAnimal = this.updateAnimal.bind(this)
+  }
+  _updateCoordinatesLat(e){
+    this.setState({
+      coordinates: e.target.value
+    })
+  }
+
+  _updateCoordinatesLong(e){
+    this.setState({
+      coordinates: e.target.value
+    })
+  }
+  _updateAnimal(e){
+    this.setState({
+      animal: e.target.value
+    })
+  }
+  _submitPicture(e){
+  var file = e.target.files[0];
+
+  this.setState({
+      filename: file.name,
+      filetype: file.type,
+      uploading: true
+  })
+
+  axios.post('/api/sign_s3', {
+      filename: file.name,
+      filetype: file.type
+  })
+  .then((result)=>{
+      console.log("axis post results ", result)
+      var signedUrl = result.data;
+
+      var options = {
+          headers: {
+              'Content-Type': file.type
+          }
+      };
+      return axios.put(signedUrl, file, options)
+  }).then( (results) => {
+      this.setState({
+      uploading: false,
+      uploaded:true
+      })
+      console.log("image returning from AWS", results)
+      this._updateImg()
+    })
+  }
+  _updateImg(){
+    var path = `https://mobyclick.s3-us-west-2.amazonaws.com/${this.state.filename}`
+    this.setState({
+        imagePath: path
+    })
+  }
+
+  _submitSighting() {
+    //get geoLocation
+    var coordinates = new google.maps.LatLng(this.state.lat, this.state.long);
+    //get animal type
+    var animal = this.state.animal;
+    //get imagePath
+    var imagePath = this.state.imagePath;
+    //make sighting database object
+    var sighting = {
+      animal: animal,
+      location: [this.state.lat, this.state.long],
+      mediaFull: imagePath
+    }
+    //Send sighting info to api
+    api.createSighting(sighting)
+    .then( (results) => {
+      //place sighting on map
+      this.setImageMarker(coordinates, animal, imagePath);
+    })
   }
   componentDidMount() {
     // setting up the map and centering it on NYC
@@ -55,7 +144,16 @@ export default class Dashboard extends React.Component {
   }
   render() {
     return (
-        <div ref="map" style={styles.map}></div>
+        <div>
+          <div ref="map" style={styles.map}></div>
+          <div>
+            <input type="text" onChange={this._updateCoordinatesLat} > Lat </input>
+            <input type="text" onChange={this._updateCoordinatesLong} > Long </input>
+            <input type="text" onchange={this._updateAnimal} > Aniaml </input>
+            <input type="file" onChange={this._submitPicture.bind(this)}>Upload File</input>
+            <button onClick={_submitSighting.bind(this)}>SubmitSighting</button>
+          </div>
+        </div>
     )
   }
 };

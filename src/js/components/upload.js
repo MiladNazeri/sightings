@@ -1,16 +1,27 @@
 import React from 'react';
 import ReactS3Uploader from 'react-s3-uploader';
-import axios from 'axios';
+m
 
 class Upload extends React.Component{
     constructor(){
         super()
         this.state= {
-
+            filename: '',
+            filetype: '',
+            imgsrc: '',
+            uploading: false,
+            uploaded:true
         }
     }
+
     _onSubmit(files) {
         var file = files.target.files[0];
+
+        this.setState({
+            filename: file.name,
+            filetype: file.type,
+            uploading: true
+        })
 
         axios.post('/api/sign_s3', {
             filename: file.name,
@@ -26,13 +37,32 @@ class Upload extends React.Component{
                 }
             };
             return axios.put(signedUrl, file, options)
-        }).then((results) => console.log(results))
-    }
+        }).then( (results) => {
+            this.setState({
+            uploading: false,
+            uploaded:true
+            })
+            console.log("image returning from AWS", results)
+            this._updateImg()
 
+        }).then(()=>{
+            })
+    }
+    _updateImg(){
+        var base = `https://mobyclick.s3-us-west-2.amazonaws.com/${this.state.filename}`
+        this.setState({
+            imgsrc: base
+        })
+
+    }
     render () {
         return (
             <div>
-                <input type="file" onChange={this._onSubmit} />
+                <input type="file" onChange={this._onSubmit.bind(this)} />
+                {this.state.uploading && <div className="ui active text loader">Loading</div>}
+                <img style={styles.img} src={this.state.imgsrc} />
+                {this.state.uploaded && <img style={styles.img} src={this.state.imgsrc} />}
+
             </div>
         )
     }
@@ -41,6 +71,13 @@ class Upload extends React.Component{
 
 export default Upload
 
+var styles = {
+    img: {
+        display: "block",
+        height: "100%",
+        width: "200px"
+    }
+}
 
 // onchange = function(){
 

@@ -10,10 +10,12 @@ module.exports = function (app) {
     var npmPath = path.join(root, './node_modules');
     var publicPath = path.join(root, './public');
     var srcPath = path.join(root, './src');
+    var vendorPath = path.join(root, './vendor');
 
     app.use(favicon(app.getValue('faviconPath')));
     app.use(express.static(npmPath));
     app.use(express.static(publicPath));
     app.use(express.static(srcPath));
+    app.use(express.static(vendorPath));
 
 };
