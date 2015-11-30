@@ -6,8 +6,7 @@ var sightingSchema = new mongoose.Schema({
 
 	animal: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Animal',
-		required: true
+		ref: 'Animal'
 	},
 	location: {
 		type: [Number],
@@ -26,6 +25,8 @@ var sightingSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
 	}
+
+
 
 });
 

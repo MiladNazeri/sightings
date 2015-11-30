@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactS3Uploader from 'react-s3-uploader';
-m
+
 
 class Upload extends React.Component{
     constructor(){

@@ -20,11 +20,11 @@ var api = {
     getUsers() {
         return axios.get(`${url}users/`)
     },
-    getAnimal(animalid) {
-        return axios.get(`${url}animals/${animalid}`)
+    getAnimals() {
+        return axios.get(`${url}animals/`)
     },
     createAnimal(animal) {
-        return axios.post()
+        return axios.post(`${url}animals/`, animal)
     },
     getSighting(sightingid) {
         return axios.get(`${url}sightings/${sightingid}`)

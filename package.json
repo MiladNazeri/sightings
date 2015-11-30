@@ -67,6 +67,7 @@
     "react-googlemaps": "^0.4.0",
     "react-router": "^1.0.0",
     "react-s3-uploader": "^1.2.0",
+    "react-select": "^0.9.1",
     "react-tap-event-plugin": "^0.2.1",
     "react-tools": "^0.10.0",
     "reactify": "^1.1.1",

@@ -89,12 +89,18 @@ gulp.task('seedDB', function () {
         { email: 'joe@fsa.com', password: 'rainbowkicks' },
         { email: 'obama@gmail.com', password: 'potus' }
     ];
+    var animals = [
+    {name: "Whale"},
+    {name: "Chicken"},
+    {name: "Rat"}
+    ]
 
     var dbConnected = require('./server/db');
 
     return dbConnected.then(function () {
         var User = require('mongoose').model('User');
-        return User.create(users);
+        var Animal = require('mongoose').model('Animal');
+        return Animal.create(animals);
     }).then(function () {
         process.kill(0);
     }).catch(function (err) {
