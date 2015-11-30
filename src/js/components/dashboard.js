@@ -51,8 +51,10 @@ export default class Dashboard extends React.Component {
     this._initSettings = this._initSettings.bind(this);
     this._setAllSightingsInDatabase = this._setAllSightingsInDatabase.bind(this);
     this._matchIdWithName = this._matchIdWithName.bind(this);
+    this._getAnimalsForSelect = this._getAnimalsForSelect.bind(this);
   }
   _initSettings(){
+
     this.setState({
       lat: "",
       long: "",
@@ -67,6 +69,7 @@ export default class Dashboard extends React.Component {
       filetype: "",
 
     })
+    this._getAnimalsForSelect();
   }
   _updateCoordinatesLat(e){
     this.setState({
@@ -268,25 +271,28 @@ export default class Dashboard extends React.Component {
     }
     console.log("new selected value: ", this.state.selectedValue)
   }
+  _getAnimalsForSelect(){
+    api.getAnimals()
+    .then( (animals) => {
+      console.log("animals received from api", animals)
+      var options = animals.data.map( (animal) => {
+      console.log(animal)
+      var option = Object.assign({}, {value: animal.id, label: animal.name} )
+      console.log("This is individual option: ", option)
+      return option
+      })
+      console.log("this is options after map", options)
+      this.setState({
+        animals: animals,
+        options: options
+      })
+    })
+  }
   componentDidMount() {
       console.log("I mounted")
       console.log("setting all sightings in Database")
       this._setAllSightingsInDatabase();
-      api.getAnimals()
-      .then( (animals) => {
-        console.log("animals received from api", animals)
-        var options = animals.data.map( (animal) => {
-        console.log(animal)
-        var option = Object.assign({}, {value: animal.id, label: animal.name} )
-        console.log("This is individual option: ", option)
-        return option
-        })
-        console.log("this is options after map", options)
-        this.setState({
-          animals: animals,
-          options: options
-        })
-      })
+      this._getAnimalsForSelect();
       //get a list of animals from the server and place on state
       //
       // setting up the map and centering it on NYC
