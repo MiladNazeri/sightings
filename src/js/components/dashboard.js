@@ -2,22 +2,6 @@ import React from 'react';
 import auth from "../utils/auth.js";
 import axios from 'axios';
 import api from '../api/api.js';
-//save that list to a variable on state
-// .then( (animals) => this.setState = {
-//   animals: animals
-// })
-//use that list to make a select list of animals
-// var animalList = this.state.animals.forEach( (animal) => {
-
-// })
-
-
-//have option add new on list
-  //if option add new, open up input
-  //save input to animal list on server
-  //return back new animal id
-//save id with new sighting
-//
 
 export default class Dashboard extends React.Component {
   constructor() {
@@ -35,6 +19,7 @@ export default class Dashboard extends React.Component {
       newAnimalSelect: false,
       newAnimalID: "",
       selectedValue: "select",
+      selectedFilterValue: "select",
       imagePath: "",
       uploading: false,
       uploaded: true,
@@ -52,6 +37,7 @@ export default class Dashboard extends React.Component {
     this._setAllSightingsInDatabase = this._setAllSightingsInDatabase.bind(this);
     this._matchIdWithName = this._matchIdWithName.bind(this);
     this._getAnimalsForSelect = this._getAnimalsForSelect.bind(this);
+    this._selectFilterHandler = this._selectFilterHandler.bind(this);
   }
   _initSettings(){
 
@@ -126,7 +112,6 @@ export default class Dashboard extends React.Component {
       console.log("image path before update img: ", this.state.imagePath)
       this._updateImg()
       console.log("image path after update img: ", this.state.imagePath)
-
     })
   }
   _updateImg(){
@@ -160,7 +145,7 @@ export default class Dashboard extends React.Component {
         console.log("new state.newAnimalID", this.state.newAnimalID)
         animalIDForSightingObject = this.state.newAnimalID;
         console.log("animalIDForSightingObject after set by state", animalIDForSightingObject )
-      } ).then( () => {
+      }).then( () => {
         console.log("animalIDForSightingObject var is set to :", animalIDForSightingObject)
         //get imagePath
         var imagePath = this.state.imagePath;
@@ -225,14 +210,22 @@ export default class Dashboard extends React.Component {
     for (var i = 0; i < this.state.options.length; i++){
       if(this.state.options[i].value === id) {
         return this.state.options[i].label
-        break;
       }
   }
 }
+  _selectFilterHandler(e){
+  this.setState({
+    selectedFilterValue: e.target.value
+  })
+
+  }
   _setAllSightingsInDatabase(e){
     //get all sightings in database
     api.getSightings()
     .then( (res) => {
+      this.setState({
+        sightings: res.data
+      })
       console.log("Results from getSightings", res)
       var sightingArray = res.data
       //use the setMarker function on each sighting
@@ -245,11 +238,7 @@ export default class Dashboard extends React.Component {
         this.setImageMarker(marker.coordinates, marker.animalTitle, marker.imagePath);
       })
       console.log("setMarkersObject made", setMarkersObject)
-
-      console.log("")
     })
-    //
-    //
   }
   _updateValue(e){
     this.setState({
@@ -288,6 +277,23 @@ export default class Dashboard extends React.Component {
       })
     })
   }
+  _submitFilter(){
+    var setFilters = this.state.sightings.filter( (sighting) => {
+      console.log("this is a sighting in sightingArray:", sighting)
+      sighting.animal === this.state.selectedFilterValue
+  })
+    console.log("setFilters", setMarkersObject)
+    var mappedFilters = setFilters.map( (sighting) => {
+        var marker = Object.assign({},{
+          coordinates: new google.maps.LatLng(sighting.location[0], sighting.location[1]),
+          animalTitle: this._matchIdWithName(sighting.animal),
+          imagePath: sighting.mediaFull })
+      this.setImageMarker(marker.coordinates, marker.animalTitle, marker.imagePath);
+
+    })
+
+  }
+
   componentDidMount() {
       console.log("I mounted")
       console.log("setting all sightings in Database")
@@ -370,6 +376,15 @@ export default class Dashboard extends React.Component {
             <br />
             <button onClick={this._submitSighting.bind(this)}>SubmitSighting</button>
             <br />
+            <hr />
+            Filter map by :
+            <select value={this.state.selectedFilterValue} onChange={this._selectFilterHandler}>
+              <option value="select">Select an animal</option>
+              {ajaxOptions}
+            </select>
+            <br />
+            <button onClick={this._submitFilter}>Submit Filter</button>
+
             <hr />
             newAnimal:{this.state.newAnimal}
             <br />

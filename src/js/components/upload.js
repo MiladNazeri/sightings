@@ -1,5 +1,8 @@
 import React from 'react';
 import ReactS3Uploader from 'react-s3-uploader';
+import auth from "../utils/auth.js";
+import axios from 'axios';
+import api from '../api/api.js';
 
 
 class Upload extends React.Component{
