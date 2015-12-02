@@ -40,7 +40,6 @@ export default class Dashboard extends React.Component {
     this._selectFilterHandler = this._selectFilterHandler.bind(this);
   }
   _initSettings(){
-
     this.setState({
       lat: "",
       long: "",
@@ -53,7 +52,6 @@ export default class Dashboard extends React.Component {
       imagePath: "",
       filename: "",
       filetype: "",
-
     })
     this._getAnimalsForSelect();
   }
@@ -162,13 +160,7 @@ export default class Dashboard extends React.Component {
           console.log("response from createsighting api: ", results)
           console.log("this.state.options: ", this.state.options)
           console.log("this.state.animals: ", this.state.animals)
-          var animalTitle = ""
-          for (var i = 0; i < this.state.options.length; i++){
-            if(this.state.options[i].value === animalIDForSightingObject) {
-              animalTitle = this.state.options[i].label
-              break;
-            }
-          }
+          var animalTitle = this._matchIdWithName(animalIDForSightingObject)
           console.log("coordinates, animalTitle, imagePath", coordinates, animalTitle, imagePath)
           this.setImageMarker(coordinates, animalTitle, imagePath);
           this._initSettings();
@@ -192,20 +184,13 @@ export default class Dashboard extends React.Component {
           console.log("response from createsighting api: ", results)
           console.log("this.state.options: ", this.state.options)
           console.log("this.state.animals: ", this.state.animals)
-          var animalTitle = ""
-          for (var i = 0; i < this.state.options.length; i++){
-            if(this.state.options[i].value === animalIDForSightingObject) {
-              animalTitle = this.state.options[i].label
-              break;
-            }
-          }
+          var animalTitle = this._matchIdWithName(animalIDForSightingObject)
           console.log("coordinates, animalTitle, imagePath", coordinates, animalTitle, imagePath)
           this.setImageMarker(coordinates, animalTitle, imagePath);
           this._initSettings();
         })
-      }
-
-  }
+   }
+ }
   _matchIdWithName(id){
     for (var i = 0; i < this.state.options.length; i++){
       if(this.state.options[i].value === id) {
@@ -217,7 +202,6 @@ export default class Dashboard extends React.Component {
   this.setState({
     selectedFilterValue: e.target.value
   })
-
   }
   _setAllSightingsInDatabase(e){
     //get all sightings in database
@@ -278,27 +262,39 @@ export default class Dashboard extends React.Component {
     })
   }
   _submitFilter(){
+
     var setFilters = this.state.sightings.filter( (sighting) => {
       console.log("this is a sighting in sightingArray:", sighting)
-      sighting.animal === this.state.selectedFilterValue
+      return sighting.animal === this.state.selectedFilterValue
   })
-    console.log("setFilters", setMarkersObject)
+    console.log("setFilters", setFilters);
+    console.log("google map", this.state.map);
+
+    // var resetBounds = new google.maps.LatLngBounds();
+    // this.state.map.fitBounds(resetBounds);
+    var canv = this.refs.map; // in React 0.14 this should reference the DOM node of "map" directly without a getDOMNOde()
+    var nyc  = new google.maps.LatLng(40.7516399, -73.9746429);
+    var opts = {
+      center   : nyc,
+      zoom     : 14,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+
+    this.state.map = new google.maps.Map(canv, opts);
+
     var mappedFilters = setFilters.map( (sighting) => {
         var marker = Object.assign({},{
           coordinates: new google.maps.LatLng(sighting.location[0], sighting.location[1]),
           animalTitle: this._matchIdWithName(sighting.animal),
           imagePath: sighting.mediaFull })
       this.setImageMarker(marker.coordinates, marker.animalTitle, marker.imagePath);
-
     })
-
   }
 
   componentDidMount() {
       console.log("I mounted")
       console.log("setting all sightings in Database")
-      this._setAllSightingsInDatabase();
-      this._getAnimalsForSelect();
+
       //get a list of animals from the server and place on state
       //
       // setting up the map and centering it on NYC
@@ -312,6 +308,8 @@ export default class Dashboard extends React.Component {
       this.state.map = new google.maps.Map(canv, opts);
       new google.maps.Marker({ position: nyc, map: this.state.map, title: 'New York City Baby!' });
 
+      this._setAllSightingsInDatabase();
+      this._getAnimalsForSelect();
     // this function places a thumbnail sized image on the map instead of an icon
     }
     setImageMarker(coordinates, animal, imagePath) {
@@ -325,7 +323,8 @@ export default class Dashboard extends React.Component {
       // these should extend the map bounds to fit based on any new sightings (still not working, zooms in too close)
       this.state.bounds.extend(marker.position);
       this.state.map.fitBounds(this.state.bounds);
-    }
+
+  }
   render() {
     console.log("this: ", this)
     var ajaxOptions = []
@@ -383,7 +382,7 @@ export default class Dashboard extends React.Component {
               {ajaxOptions}
             </select>
             <br />
-            <button onClick={this._submitFilter}>Submit Filter</button>
+            <button onClick={this._submitFilter.bind(this)}>Submit Filter</button>
 
             <hr />
             newAnimal:{this.state.newAnimal}
