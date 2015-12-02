@@ -17,6 +17,16 @@ var sightingSchema = new mongoose.Schema({
 		required: true
 	},
 
+	address : {
+		street: String,
+		city: String,
+		state: String,
+		zipcode: String,
+		country: String
+	},
+
+	notAppropriate: Boolean,
+
 	mediaFull: String,
 
 	mediaThumbnail: String,

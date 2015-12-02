@@ -54,6 +54,7 @@ export default class Dashboard extends React.Component {
       filetype: "",
     })
     this._getAnimalsForSelect();
+    this._getAllSightings();
   }
   _updateCoordinatesLat(e){
     this.setState({
@@ -86,7 +87,7 @@ export default class Dashboard extends React.Component {
       filetype: file.type,
       uploading: true
   })
-  axios.post('/api/sign_s3', {
+  axios.post('/api/s3/sign_s3', {
       filename: file.name,
       filetype: file.type
   })
@@ -94,12 +95,13 @@ export default class Dashboard extends React.Component {
       console.log("axis post results ", result)
       var signedUrl = result.data;
 
-      var options = {
-          headers: {
-              'Content-Type': file.type
-          }
-      };
-      return axios.put(signedUrl, file, options)
+      // var options = {
+      //     headers: {
+      //         'Content-Type': file.type
+      //     }
+      // };
+      return axios.put(signedUrl, file)
+      // return axios.put(signedUrl, file, options)
   })
   .then( (results) => {
       this.setState({
@@ -142,6 +144,7 @@ export default class Dashboard extends React.Component {
       }).then( () => {
         console.log("new state.newAnimalID", this.state.newAnimalID)
         animalIDForSightingObject = this.state.newAnimalID;
+        this._getAnimalsForSelect();
         console.log("animalIDForSightingObject after set by state", animalIDForSightingObject )
       }).then( () => {
         console.log("animalIDForSightingObject var is set to :", animalIDForSightingObject)
@@ -151,7 +154,8 @@ export default class Dashboard extends React.Component {
         var sighting = {
           animal: animalIDForSightingObject,
           location: [this.state.lat, this.state.long],
-          mediaFull: imagePath
+          mediaFull: imagePath,
+          userId: auth.getToken()
         }
         //Send sighting info to api
         api.createSighting(sighting)
@@ -175,7 +179,8 @@ export default class Dashboard extends React.Component {
         var sighting = {
           animal: animalIDForSightingObject,
           location: [this.state.lat, this.state.long],
-          mediaFull: imagePath
+          mediaFull: imagePath,
+          userId: auth.getToken()
         }
         //Send sighting info to api
         api.createSighting(sighting)
@@ -203,6 +208,14 @@ export default class Dashboard extends React.Component {
     selectedFilterValue: e.target.value
   })
   }
+  _getAllSightings(e){
+    api.getSightings()
+    .then( (res) => {
+      this.setState({
+        sightings: res.data
+      })
+  })
+}
   _setAllSightingsInDatabase(e){
     //get all sightings in database
     api.getSightings()
@@ -282,6 +295,27 @@ export default class Dashboard extends React.Component {
 
     this.state.map = new google.maps.Map(canv, opts);
 
+    var mappedFilters = setFilters.map( (sighting) => {
+        var marker = Object.assign({},{
+          coordinates: new google.maps.LatLng(sighting.location[0], sighting.location[1]),
+          animalTitle: this._matchIdWithName(sighting.animal),
+          imagePath: sighting.mediaFull })
+      this.setImageMarker(marker.coordinates, marker.animalTitle, marker.imagePath);
+    })
+  }
+  _sortByUser(){
+    var setFilters = this.state.sightings.filter( (sighting) => {
+      return sighting.userId === auth.getToken();
+    })
+
+    console.log("setfilters:",setFilters);
+    var canv = this.refs.map; // in React 0.14 this should reference the DOM node of "map" directly without a getDOMNOde()
+    var nyc  = new google.maps.LatLng(40.7516399, -73.9746429);
+    var opts = {
+      center   : nyc,
+      zoom     : 14,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
     var mappedFilters = setFilters.map( (sighting) => {
         var marker = Object.assign({},{
           coordinates: new google.maps.LatLng(sighting.location[0], sighting.location[1]),
@@ -383,6 +417,9 @@ export default class Dashboard extends React.Component {
             </select>
             <br />
             <button onClick={this._submitFilter.bind(this)}>Submit Filter</button>
+            <br />
+            <button onClick={this._sortByUser.bind(this)}>Sory by user</button>
+            <br />
 
             <hr />
             newAnimal:{this.state.newAnimal}

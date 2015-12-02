@@ -12,6 +12,7 @@ import Apptest from './components/apptest.js';
 import Dashboard from './components/dashboard';
 import Default from './components/default';
 import Upload from './components/upload';
+import Sightings from './components/sightings';
 
 
 injectTapEventPlugin();
@@ -33,9 +34,8 @@ ReactDOM.render((
       <IndexRoute component={App}/>
       <Route name="logout" path="/logout" component={Logout} />
       <Route name="about" path="/about" component={About} />
-      <Route name="upload" path="/upload" component={Upload} />
-      <Route name="dashboard" path="/dashboard" component={Dashboard} onEnter={requireAuth}
-      />
+      <Route name="sightings" path="/sightings" component={Sightings} />
+      <Route name="dashboard" path="/dashboard" component={Dashboard} onEnter={requireAuth} />
     </Route>
   </Router>
 ), document.getElementById('main'));
