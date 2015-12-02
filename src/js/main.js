@@ -1,43 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, Link, IndexRoute, History} from 'react-router';
-import { createHistory, useBasename } from 'history'
-import auth from "./utils/auth.js"
-import injectTapEventPlugin from 'react-tap-event-plugin';
+import { Router, Route, IndexRoute, History, Link } from 'react-router';
+import auth from "./utils/auth.js";
 
-import App from './components/app';
-import Logout from './components/Logout';
-import About from './components/About';
-import Apptest from './components/apptest.js';
-import Dashboard from './components/dashboard';
-import Default from './components/default';
-import Upload from './components/upload';
-import Sightings from './components/sightings';
-
-
-injectTapEventPlugin();
-
-const history = useBasename(createHistory)({
-    basename: '/'
-})
+import App from './components/App';
+import Signin from './components/Signin.js';
+import Sightings from './components/Sightings.js';
+import MapView from './components/MapView.js';
+import AddSighting from './components/AddSighting.js';
 
 function requireAuth(nextState, replaceState) {
     if(!auth.loggedIn())
-        replaceState({ nextPathname: nextState.location.pathname}, '/')
+        replaceState({ nextPathname: nextState.location.pathname}, '/signin')
 }
 
-
-// testing the router as the main render
 ReactDOM.render((
-  <Router>
-    <Route path="/" component={Default}>
-      <IndexRoute component={App}/>
-      <Route name="logout" path="/logout" component={Logout} />
-      <Route name="about" path="/about" component={About} />
-      <Route name="sightings" path="/sightings" component={Sightings} />
-      <Route name="dashboard" path="/dashboard" component={Dashboard} onEnter={requireAuth} />
-    </Route>
-  </Router>
-), document.getElementById('main'));
-
-// ReactDOM.render( <App />, document.getElementById('main') );
+      <Router>
+        <Route name='app' path="/" component={App}>
+          <Route name="signin" path='/signin' component={Signin}/>
+          <Route name="userSightings" path="/sightings/user/:id" component={Sightings} onEnter={requireAuth} />
+          <Route name="animalSightings" path="/sightings/animal/:animalId" component={Sightings} onEnter={requireAuth} />
+          <Route name="mapView" path="/mapView" component={MapView} onEnter={requireAuth} />
+          <Route name="addSighting" path="/addSighting" component={AddSighting} onEnter={requireAuth} />
+        </Route>
+      </Router>
+), document.getElementById('main'))

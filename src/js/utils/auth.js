@@ -2,7 +2,9 @@ import api from "../api/api.js"
 
 module.exports = {
     signup(email, pass, cb){
+        console.log("signup cb:", cb)
         cb = arguments[arguments.length-1]
+        console.log(cb)
         var loginObject = {
             email: email,
             password: pass
@@ -25,6 +27,7 @@ module.exports = {
     },
     login(email, pass, cb){
         cb = arguments[arguments.length-1]
+        console.log("login cb:", cb)
         if (localStorage.token) {
             if (cb) cb(true)
             this.onChange(true)
@@ -50,6 +53,7 @@ module.exports = {
         return localStorage.token
     },
     logout(cb){
+        console.log("logout: ", cb)
         api.logoutUser().then( () => {
         delete localStorage.token
         if (cb) cb()
