@@ -9,31 +9,31 @@ var api = {
         return axios.get('logout/')
     },
     getSession() {
-        return axios.get(`${url}/getsession/`)
+        return axios.get(`${url}getsession/`)
     },
     createUser(user) {
         return axios.post(`${url}users/`, user)
     },
     getUser(userid) {
-        return axios.get(`${url}/users/${userid}`)
+        return axios.get(`${url}users/${userid}`)
     },
     getUsers() {
-        return axios.get(`${url}/users/`)
+        return axios.get(`${url}users/`)
     },
-    getAnimal(animalid) {
-        return axios.get(`${url}/animals/${animalid}`)
+    getAnimals() {
+        return axios.get(`${url}animals/`)
     },
     createAnimal(animal) {
-        return axios.post()
+        return axios.post(`${url}animals/`, animal)
     },
     getSighting(sightingid) {
-        return axios.get(`${url}/sightings/${sightingid}`)
+        return axios.get(`${url}sightings/${sightingid}`)
     },
     getSightings() {
-        return axios.get(`${url}/sightings/`)
+        return axios.get(`${url}sightings/`)
     },
     createSighting(sighting) {
-        return axios.post(`${url}/sightings/`, sighting)
+        return axios.post(`${url}sightings/`, sighting)
     }
 }
 

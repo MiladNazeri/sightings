@@ -12,8 +12,10 @@ router.get('/', function (req, res, next) {
 router.post('/', function (req, res, next) {
 	Animal.create(req.body)
 		.then(function (result) {
-			res.send(result)
+			return res.send(result)
 		}, next);
 })
 
-module.exports = router;
+module.exports = router
+
+

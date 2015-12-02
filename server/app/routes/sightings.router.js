@@ -5,7 +5,7 @@ var Sighting = mongoose.model('Sighting');
 router.get('/', function (req, res, next) {
 	Sighting.find()
 		.then(function (sightings) {
-			res.send(sightings);
+			return res.send(sightings);
 		}, next);
 });
 
@@ -13,7 +13,7 @@ router.post('/', function (req, res, next) {
 	req.body.time = Date.now();
 	Sighting.create(req.body)
 		.then(function (result) {
-			res.send(result);
+			return res.send(result);
 		}, next);
 })
 
