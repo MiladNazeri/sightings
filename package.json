@@ -11,6 +11,7 @@
   },
   "scripts": {
     "start": "nodemon --watch server -e js,html server/start.js"
+    "postinstall": "webpack --config ./webpack-production.config.js --progress --colors",
   },
   "engines": {
     "node": ">=4.0.0"
