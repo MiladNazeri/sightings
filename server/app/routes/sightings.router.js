@@ -1,6 +1,6 @@
 var router = require('express').Router();
 var mongoose = require('mongoose');
-// var Animal = 
+// var Animal =
 var Sighting = mongoose.model('Sighting');
 
 router.get('/', function (req, res, next) {
@@ -19,7 +19,7 @@ router.post('/', function (req, res, next) {
 })
 
 router.get('/:id', function (req, res, next) {
-	Sighting.findById(req.params.id).populate('animal').exec()
+	Sighting.findById(req.params.id).populate('animal', 'user').exec()
 		.then(function (sighting) {
 			res.send(sighting);
 		}, next)
