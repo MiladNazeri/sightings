@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute, History} from 'react-router';
 import auth from "./utils/auth.js"
+import injectTapEventPlugin from "react-tap-event-plugin";
+
+injectTapEventPlugin();
 
 import App from './components/app';
 import Logout from './components/logout';
