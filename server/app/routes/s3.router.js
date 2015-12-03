@@ -2,15 +2,16 @@
     var aws = require('aws-sdk');
     var fs = require('fs')
 
-    if (process.env.NODE_ENV !== 'development'){
-    var AWS_ACCCES_KEY_ID = fs.readFileSync(__dirname + '/../../../key.pem').toString();
-    var AWS_SECRET_ACCESS_KEY = fs.readFileSync(__dirname + '/../../../cert.pem').toString();
-    var S3_BUCKET = fs.readFileSync(__dirname + '/../../../bucket.pem').toString();
-    }
-    if (process.env.NODE_ENV !== 'production'){
+
+    if (process.env.NODE_ENV === 'production'){
     var AWS_ACCCES_KEY_ID = process.env.AWS_ACCESS_KEY_ID
     var AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY
     var S3_BUCKET = process.env.S3_BUCKET
+    } else
+    {
+        var AWS_ACCCES_KEY_ID = fs.readFileSync(__dirname + '/../../../key.pem').toString();
+        var AWS_SECRET_ACCESS_KEY = fs.readFileSync(__dirname + '/../../../cert.pem').toString();
+        var S3_BUCKET = fs.readFileSync(__dirname + '/../../../bucket.pem').toString();
     }
 
     aws.config.update({accessKeyId: AWS_ACCCES_KEY_ID  , secretAccessKey: AWS_SECRET_ACCESS_KEY });
