@@ -1,6 +1,5 @@
 import React from 'react';
 import { Router, Route, Link } from 'react-router';
-import Dashboard from './dashboard.js';
 import ReactDOM from 'react-dom';
 import api from '../api/api.js';
 import auth from "../utils/auth.js"
@@ -61,8 +60,7 @@ export default class App extends React.Component {
       if (location.state && location.state.nextPathname) {
           this.context.history.replaceState(null, location.state.nextPathname)
       } else {
-          console.log("replaceState dashboard")
-          this.context.history.replaceState(null, '/dashboard')
+          this.context.history.replaceState(null, '/sightings')
       }
 
     })
@@ -85,8 +83,7 @@ export default class App extends React.Component {
       if (location.state && location.state.nextPathname) {
           this.context.history.replaceState(null, location.state.nextPathname)
       } else {
-          console.log("replaceState dashboard")
-          this.context.history.replaceState(null, '/dashboard')
+          this.context.history.replaceState(null, '/sightings')
       }
     })
   }
@@ -94,7 +91,6 @@ export default class App extends React.Component {
   render() {
     return (
         <div style={styles.mainContainer}>
-          <p>Go to the <Link to="/dashboard">Dashboard</Link></p>
             <Card style={styles.card}>
               <Tabs>
                 <Tab label="Login">

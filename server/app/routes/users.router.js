@@ -11,7 +11,7 @@ router.post('/', function (req, res, next) {
 
 
 router.get('/:id', function (req, res, next) {
-	User.findById(req.params.id)
+	User.findById(req.params.id).populate('sighting').exec()
 		.then(function (user) {
 			res.send(user);
 		}, next)

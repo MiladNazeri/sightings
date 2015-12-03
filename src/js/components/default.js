@@ -30,9 +30,9 @@ export default class Default extends React.Component {
               ( <Link to="/">Sign in</Link> )
             }
           </li>
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/upload">Upload</Link></li>
-          <li><Link to="/dashboard">Dashboard</Link>(authenticated) </li>
+          <li><Link to="/sightings">sightings</Link>(authenticated) </li>
+          <li><Link to="/mapview">mapview</Link>(authenticated) </li>
+          <li><Link to="/addSighting">addSighting</Link>(authenticated) </li>
         </ul>
         {this.props.children}
       </div>

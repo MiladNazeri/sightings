@@ -7,3 +7,4 @@ coverage
 config.env
 key.pem
 cert.pem
+bucket.pem
