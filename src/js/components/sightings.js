@@ -11,28 +11,45 @@ export default class Sightings extends React.Component {
 		}
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 	  api.getSightings()
-    .then( (res) => {
+      .then( (res) => {
       this.setState({
         sightings: res.data
+      })
+      var sightingsList = this.state.sightings.map( (sighting, index) => {
+          return (<span key={index} style={styles.sightings}>
+              <img style={styles.img} src={sighting.mediaFull} />
+              <p>Animal: {sighting.animal.name}
+              Location: {sighting.location}
+              Time: {sighting.time}</p>
+          </span>)
+      })
+      this.setState({
+        sightingsList: sightingsList
       })
   	})
 	}
 
-  _getAllSightings(){
-  }
-
-
 	render() {
-		console.log(this.state.sightings[0]);
+        console.log(this.state.sightings)
+
 		return (
 			<div>
 				<div>
-					Animal {this.state.sightings[0]}
-					{this.state.sightings.mediaFull}
+                {this.state.sightingsList}
 				</div>
 			</div>
 		)
 	}
+}
+
+
+
+var styles={
+    img:{
+        display: "inline",
+        width: "auto",
+        height: "250px",
+    }
 }
