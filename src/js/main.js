@@ -4,7 +4,7 @@ import { Router, Route, Link, IndexRoute, History} from 'react-router';
 import auth from "./utils/auth.js"
 
 import App from './components/app';
-import Logout from './components/Logout';
+import Logout from './components/logout';
 import Default from './components/default';
 import Sightings from './components/sightings';
 import MapView from './components/mapview';
@@ -21,8 +21,6 @@ ReactDOM.render((
       <IndexRoute component={App}/>
       <Route name="logout" path="/logout" component={Logout} />
       <Route name="sightings" path="/sightings" component={Sightings} onEnter={requireAuth} />
-      // <Route name="sightings" path="/sightings/user/:id" component={Sightings} onEnter={requireAuth} />
-      // <Route name="sightings" path="/sightings/animal/:id" component={Sightings} onEnter={requireAuth} />
       <Route name="mapview" path="/mapview" component={MapView} onEnter={requireAuth} />
       <Route name="addSighting" path="/addSighting" component={AddSighting} onEnter={requireAuth} />
     </Route>
