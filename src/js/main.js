@@ -1,43 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute, History} from 'react-router';
-import { createHistory, useBasename } from 'history'
 import auth from "./utils/auth.js"
-import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import App from './components/app';
 import Logout from './components/Logout';
-import About from './components/About';
-import Apptest from './components/apptest.js';
-import Dashboard from './components/dashboard';
 import Default from './components/default';
-import Upload from './components/upload';
 import Sightings from './components/sightings';
-
-
-injectTapEventPlugin();
-
-const history = useBasename(createHistory)({
-    basename: '/'
-})
+import MapView from './components/MapView';
+import AddSighting from './components/addsighting';
 
 function requireAuth(nextState, replaceState) {
     if(!auth.loggedIn())
         replaceState({ nextPathname: nextState.location.pathname}, '/')
 }
 
-
-// testing the router as the main render
 ReactDOM.render((
   <Router>
     <Route path="/" component={Default}>
       <IndexRoute component={App}/>
       <Route name="logout" path="/logout" component={Logout} />
-      <Route name="about" path="/about" component={About} />
-      <Route name="sightings" path="/sightings" component={Sightings} />
-      <Route name="dashboard" path="/dashboard" component={Dashboard} onEnter={requireAuth} />
+      <Route name="sightings" path="/sightings" component={Sightings} onEnter={requireAuth} />
+      <Route name="sightings" path="/sightings/user/:id" component={Sightings} onEnter={requireAuth} />
+      <Route name="sightings" path="/sightings/animal/:id" component={Sightings} onEnter={requireAuth} />
+      <Route name="mapview" path="/mapview" component={MapView} onEnter={requireAuth} />
+      <Route name="addSighting" path="/addSighting" component={AddSighting} onEnter={requireAuth} />
     </Route>
   </Router>
 ), document.getElementById('main'));
-
-// ReactDOM.render( <App />, document.getElementById('main') );
