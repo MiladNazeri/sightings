@@ -17,9 +17,5 @@ module.exports = {
     "clientID": "INSERT_GOOGLE_CLIENTID_HERE",
     "clientSecret": "INSERT_GOOGLE_CLIENT_SECRET_HERE",
     "callbackURL": "INSERT_GOOGLE_CALLBACK_HERE"
-  },
-  "AMAZON": {
-    "AWS_ACCESS_KEY_ID" : fs.readFileSync(__dirname + '/../../key.pem').toString(),
-    "AWS_SECRET_ACCESS_KEY" : fs.readFileSync(__dirname + '/../../cert.pem').toString()
   }
 };

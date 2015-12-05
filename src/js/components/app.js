@@ -86,7 +86,7 @@ export default class App extends React.Component {
           this.context.history.replaceState(null, location.state.nextPathname)
       } else {
           console.log("replaceState dashboard")
-          this.context.history.replaceState(null, '/dashboard')
+          this.context.history.replaceState(null, '/sightings')
       }
     })
   }
