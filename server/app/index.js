@@ -12,6 +12,7 @@ require('./configure')(app);
     app.get('*', function(req,res,next){
         console.log("req.headers['x-forwarded-proto']", req.headers['x-forwarded-proto'])
         console.log("req.headers", req.headers)
+        console.log("!!!!!!! REQ.URL", req.url)
         if(req.headers['x-forwarded-proto']!='https')
             res.redirect('https://mobyclick.herokuapp.com'+req.url)
         else
