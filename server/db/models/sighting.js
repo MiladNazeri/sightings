@@ -9,8 +9,7 @@ var sightingSchema = new mongoose.Schema({
 		ref: 'Animal'
 	},
 	location: {
-		type: [Number],
-		required: true
+		type: [Number]
 	},
 	time: {
 		type: Date,
