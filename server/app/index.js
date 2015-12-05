@@ -8,6 +8,17 @@ module.exports = app;
 // function located at server/app/configure/index.js
 require('./configure')(app);
 
+ if (process.env.NODE_ENV === 'production'){
+    app.get('*', function(req,res,next){
+        console.log("req.headers['x-forwarded-proto']", req.headers['x-forwarded-proto'])
+        console.log("req.headers", req.headers)
+        if(req.headers['x-forwarded-proto']!='https')
+            res.redirect('https://mobyclick.herokuapp.com'+req.url)
+        else
+            next()
+    })
+ }
+
 // Routes that will be accessed via AJAX should be prepended with
 // /api so they are isolated from our GET /* wildcard.
 app.use('/api', require('./routes'));
