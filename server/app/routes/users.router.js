@@ -5,6 +5,7 @@ var User = mongoose.model('User');
 router.post('/', function (req, res, next) {
 	User.create(req.body)
 		.then(function (result) {
+            console.log(result)
             return res.send(result)
         }, next)
 });
