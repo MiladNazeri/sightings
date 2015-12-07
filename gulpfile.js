@@ -10,13 +10,14 @@ var rename = require('gulp-rename');
 var sass = require('gulp-sass');
 var livereload = require('gulp-livereload');
 var minifyCSS = require('gulp-minify-css');
-var ngAnnotate = require('gulp-ng-annotate');
+//var ngAnnotate = require('gulp-ng-annotate');
 var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
 var eslint = require('gulp-eslint');
 var mocha = require('gulp-mocha');
 var karma = require('karma').server;
 var istanbul = require('gulp-istanbul');
+var Promise = require('bluebird');
 
 // Development tasks
 // --------------------------------------------------------------
@@ -90,9 +91,22 @@ gulp.task('seedDB', function () {
         { email: 'obama@gmail.com', password: 'potus' }
     ];
     var animals = [
-    {name: "Whale"},
-    {name: "Chicken"},
-    {name: "Rat"}
+        {name: "Whale"},
+        {name: "Bat"},
+        {name: "Bear"},
+        {name: "Bird"},
+        {name: "Cat"},
+        {name: "Duck"},
+        {name: "Eagle"},
+        {name: "Fish"},
+        {name: "Horse"},
+        {name: "Lion"},
+        {name: "Mouse"},
+        {name: "Sheep"},
+        {name: "Snake"},
+        {name: "Shark"},
+        {name: "Tiger"},
+        {name: "Wolf"}
     ]
 
     var dbConnected = require('./server/db');
@@ -100,7 +114,10 @@ gulp.task('seedDB', function () {
     return dbConnected.then(function () {
         var User = require('mongoose').model('User');
         var Animal = require('mongoose').model('Animal');
-        return Animal.create(animals);
+        console.log(Animal, animals);
+        return Promise.map(animals, function(animal) {
+            return Animal.create(animal);
+        });
     }).then(function () {
         process.kill(0);
     }).catch(function (err) {
