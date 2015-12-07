@@ -22,18 +22,16 @@ export default class Default extends React.Component {
   render() {
     return (
       <div>
-        <h1 style={styles.center}>Welcome to Sightings</h1>
-        <ul>
-          <li>
-            {this.state.loggedIn ?
-              ( <Link to="/logout">Log out</Link> ) :
-              ( <Link to="/">Sign in</Link> )
-            }
-          </li>
-          <li><Link to="/sightings">sightings</Link>(authenticated) </li>
-          <li><Link to="/mapview">mapview</Link>(authenticated) </li>
-          <li><Link to="/addSighting">addSighting</Link>(authenticated) </li>
-        </ul>
+        <div id="title" style={styles.center}>Welcome to Sightings</div>
+        <div id = "authButton">
+          {this.state.loggedIn ?
+            ( <Link to="/logout">Log out</Link> ) :
+            ( <Link to="/">Sign in</Link> )
+          }
+        </div>
+        <div id = "mapButton"><Link to="/mapview">mapview</Link></div>
+        <div id = "addButton"><Link to="/addSighting"><div><img id="addButtonIcon" src="images/add-icon.png"/></div></Link></div>
+        <div id = "sightingsButton"><Link to="/sightings">List of Sightings<img id= "sightingsIcon" src="images/menu-icon.png"/></Link></div>
         {this.props.children}
       </div>
     )
@@ -42,6 +40,11 @@ export default class Default extends React.Component {
 
 var styles = {
   center: {
-    textAlign: 'center'
+    textAlign: 'center',
+    position: 'absolute',
+    height: 26,
+    left:0,
+    right:0,
+    zIndex: 100,
   }
 }
