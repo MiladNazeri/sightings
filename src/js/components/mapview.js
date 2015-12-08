@@ -96,6 +96,28 @@ export default class MapView extends React.Component {
 		this._initMap();
 		this._setMarkersOnMap(this.state.allSightings)
 	}
+	_showAnimalByTime(){
+		var setFilters = this._filter( this.state.allSightings, "animal", "id", this.state.selectedFilterValue);
+		function compare(a, b) {
+			if(a.time < b.time)
+				return -1;
+			if(a.time > b.time)
+				return 1;
+			else
+				return 0;
+		};
+		setFilters.sort(compare);
+		console.log("setFilters time", setFilters);
+		console.log(this._setMarkersOnMap);
+		for(var i = 1; i <= setFilters.length; i++) {
+			setTimeout(function (x) {
+				return function () {
+
+					this._setMarkersOnMap(setFilters[x-1]);
+				};
+			}(i), i * 500);
+		}
+	}
 	componentDidMount() {
 		api.getAnimals()
 		.then( (res) => {
@@ -140,6 +162,8 @@ export default class MapView extends React.Component {
 				<button onClick={this._sortByUser.bind(this)}>Sort by user</button>
 				<br />
 				<button onClick={this._showAllSightings.bind(this)}>Show All Sightings</button>
+				<br />
+				<button onClick={this._showAnimalByTime.bind(this)}>Show Migration Pattern</button>
 			</div>
 		)
 	}
