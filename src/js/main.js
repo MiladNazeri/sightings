@@ -1,31 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, Link, IndexRoute, History} from 'react-router';
-import auth from "./utils/auth.js"
-import injectTapEventPlugin from "react-tap-event-plugin";
+import { Router, Route, IndexRoute, History} from 'react-router';
 
-injectTapEventPlugin();
 
-import App from './components/app';
-import Logout from './components/logout';
-import Default from './components/default';
-import Sightings from './components/sightings';
-import MapView from './components/mapview';
-import AddSighting from './components/addsighting';
+import routes from './config/routes.js';
 
-function requireAuth(nextState, replaceState) {
-    if(!auth.loggedIn())
-        replaceState({ nextPathname: nextState.location.pathname}, '/')
-}
 
-ReactDOM.render((
-  <Router>
-    <Route path="/" component={Default}>
-      <IndexRoute component={App}/>
-      <Route name="logout" path="/logout" component={Logout} />
-      <Route name="sightings" path="/sightings" component={Sightings} onEnter={requireAuth} />
-      <Route name="mapview" path="/mapview" component={MapView} onEnter={requireAuth} />
-      <Route name="addSighting" path="/addSighting" component={AddSighting} onEnter={requireAuth} />
-    </Route>
-  </Router>
-), document.getElementById('main'));
+ReactDOM.render(
+  <Router>{routes}</Router>,
+  document.getElementById('main')
+)
+
+
+
+// ReactDOM.render((
+//   <Router>
+//     <Route path="/" component={App}>
+//       <IndexRoute component={User}/>
+//       <Route name="pro" path="pro" component={Pro} />
+//     </Route>
+//   </Router>
+// ), document.getElementById(''));
