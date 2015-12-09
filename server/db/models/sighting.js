@@ -4,20 +4,14 @@ var Animal = mongoose.model('Animal');
 
 var sightingSchema = new mongoose.Schema({
 
-	animal: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Animal',
-		required: true
-	},
 	location: {
 		type: [Number],
 		required: true
 	},
 	time: {
 		type: Date,
-		required: true
+		default: Date.now
 	},
-
 	address : {
 		street: String,
 		city: String,
@@ -25,25 +19,39 @@ var sightingSchema = new mongoose.Schema({
 		zipcode: String,
 		country: String
 	},
-
 	notAppropriate: {
 		type: Boolean,
 		required: true,
 		default: false
 	},
-
-	mediaFull: {
+	title: {
 		type: String,
 		required: true
 	},
-
-	mediaThumbnail: String,
-
-	userId: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User',
+	story: {
+		type: String
+	},
+	photo: {
+		type: String,
 		required: true
+	},
+	mediaThumbnail: String,
+	pending: {
+		type: String,
+		default: true
+	},
+	proWhalePick: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Whale',
+		required: true
+	},
+	proComment: {
+		type: String
+	},
+	proApprove: {
+		type: Boolean
 	}
+
 
 
 

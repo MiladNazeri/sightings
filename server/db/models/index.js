@@ -4,3 +4,4 @@
 require('./animal');
 require('./sighting');
 require('./user');
+require('./whale');
