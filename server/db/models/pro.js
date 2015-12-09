@@ -27,7 +27,11 @@ var userSchema = new mongoose.Schema({
     },
     title: String,
 
+    type: String,
+
     story: String,
+
+    reply: String,
 
     notAppropriate: {
         type: Boolean,
