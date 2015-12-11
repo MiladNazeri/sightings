@@ -21,6 +21,7 @@ export default class User extends React.Component {
     }
     this._addButtonPress = this._addButtonPress.bind(this)
     this._closeModal = this._closeModal.bind(this)
+    this._getSightings = this._getSightings.bind(this)
   }
   _addButtonPress(){
     this.setState({
@@ -29,7 +30,7 @@ export default class User extends React.Component {
 
   }
   _closeModal(){
-    this.state.getSightings();
+    this.state.getSightings.call(this);
     this.setState({
       openModal: false
     })
@@ -59,6 +60,7 @@ export default class User extends React.Component {
     })
   }
   render() {
+    console.log("user map")
     return (
         <div style={styles.mainContainer}>
           {this.state.openModal && <MyModal openModal={this.state.openModal} user={true} pro={false} closeModal={this._closeModal} whaleOptions={this.state.whaleOptions} /> }
