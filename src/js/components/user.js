@@ -21,6 +21,7 @@ export default class User extends React.Component {
     }
     this._addButtonPress = this._addButtonPress.bind(this)
     this._closeModal = this._closeModal.bind(this)
+    this._getSightings = this._getSightings.bind(this)
   }
   _addButtonPress(){
     this.setState({
@@ -29,7 +30,7 @@ export default class User extends React.Component {
 
   }
   _closeModal(){
-    this.state.getSightings();
+    this.state.getSightings.call(this);
     this.setState({
       openModal: false
     })

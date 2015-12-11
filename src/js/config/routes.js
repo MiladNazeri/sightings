@@ -10,7 +10,7 @@ import Error from '../components/error';
 
 module.exports = (
   <Route path="/" component={App}>
-    <IndexRoute component={User} />
+    <IndexRoute component={Pro} />
     <Route path="/pro" component={Pro} />
     <Route path="/user" component={User} />
     <Route path="*" component={Error} />
