@@ -46,6 +46,7 @@ export default class MyModal extends React.Component {
     this._updateWhaleValue = this._updateWhaleValue.bind(this)
     this._addProCommentHandle = this._addProCommentHandle.bind(this)
     this._addProApprove = this._addProApprove.bind(this)
+    this._cancel = this._cancel.bind(this)
 
   }
   _initModal(){
@@ -172,6 +173,14 @@ export default class MyModal extends React.Component {
         this.state.closeModal()
       })
   }
+  _cancel(){
+    this.setState({
+      modalIsOpen: false
+    })
+    this._initModal();
+    this.state.closeModal()
+
+  }
 
   render(){
     return(
@@ -226,6 +235,7 @@ export default class MyModal extends React.Component {
         <button onClick={this._submitPro}>submit</button>
         </div>
         }
+        <button onClick={this._cancel}>submit</button>
       </Modal>
       )
   }
