@@ -235,7 +235,7 @@ export default class MyModal extends React.Component {
         <button onClick={this._submitPro}>submit</button>
         </div>
         }
-        <button onClick={this._cancel}>submit</button>
+        <button onClick={this._cancel}>cancel</button>
       </Modal>
       )
   }
