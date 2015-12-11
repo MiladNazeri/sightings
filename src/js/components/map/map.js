@@ -1,4 +1,5 @@
 import React from 'react';
+import api from '../../api/api.js';
 
 export default class Map extends React.Component {
 
@@ -18,6 +19,17 @@ export default class Map extends React.Component {
             whales: this.props.whales
         }
     }
+    // _initMap(){
+    //     var canv = this.refs.map;
+    //     var nyc  = new google.maps.LatLng(40.7516399, -73.9746429);
+    //     var opts = {
+    //       center   : nyc,
+    //       zoom     : 14,
+    //       mapTypeId: google.maps.MapTypeId.ROADMAP
+    //     }
+    //       this.state.map = new google.maps.Map(canv, opts);
+    //       new google.maps.Marker({ position: nyc, map: this.state.map, title: 'New York City Baby!' });
+    // }
     _setMarkersOnMap(mapBox, myLayer, object){
         this.setState({
             allMapboxMarkers : []
@@ -31,10 +43,10 @@ export default class Map extends React.Component {
                     coordinates:[item.location[1],item.location[0]]
                 },
                 "properties": {
-                    "title":item.animal.name,
+                    "title":item.title,
                     "image":item.mediaFull,
                     "icon": {
-                        "iconUrl": "icons/"+item.animal.name+".svg",
+                        "iconUrl": "icons/shark.svg",
                         "iconSize": [50, 50], // size of the icon
                         "iconAnchor": [25, 25], // point of the icon which will correspond to marker's location
                         "popupAnchor": [0, -25], // point from which the popup should open relative to the iconAnchor
@@ -42,10 +54,8 @@ export default class Map extends React.Component {
                     }
                 }
             })
-            console.log(marker.properties.icon);
-            this.setState({
-                allMapboxMarkers: this.state.allMapboxMarkers.push(marker)
-            })
+            console.log("this is an icon", marker.properties.icon);
+            this.state.allMapboxMarkers.push(marker)
         })
         console.log("This is the mapbox markers", this.state.allMapboxMarkers)
         myLayer.on('layeradd', function(e) {
@@ -58,10 +68,30 @@ export default class Map extends React.Component {
         myLayer.setGeoJSON(this.state.allMapboxMarkers)
         mapBox.fitBounds(myLayer.getBounds())
     }
+    
+    _showAllSightings(mapBox, myLayer){
+        // this._initMap();
+            console.log("initiating map")
+        this._setMarkersOnMap(mapBox, myLayer, this.state.sightings)
+    }
+
     componentDidMount() {
         L.mapbox.accessToken = this.state.mapToken;
         this.mapBox = L.mapbox.map('mapbox', 'mapbox.streets').setView([40.718243, -73.99868], 14);
         var myLayer = L.mapbox.featureLayer().addTo(this.mapBox);
+        api.getSightings()
+        .then( (res) => {
+            console.log("res",res)
+            var sightings = res.data
+            this.setState({
+                sightings: sightings,
+            })
+        })
+        .then(() => {
+            console.log("showing Sightings")
+            this._showAllSightings(this.mapBox, myLayer);
+        })
+
     }
     componentWillUnmount() {
         this.mapBox.remove();
@@ -107,13 +137,6 @@ var styles = {
 //          {animalOptions}
 //     </select>
 // </div>
-
-// _showAllSightings(mapBox, myLayer){
-//     this._initMap();
-//     this._setMarkersOnMap(mapBox, myLayer, this.state.allSightings)
-// }
-
-// this._showAllSightings(this.mapBox, myLayer);
 
 // var animalOptions = [];
 // this.state.allAnimalsSelect.forEach( (option, index) => {
