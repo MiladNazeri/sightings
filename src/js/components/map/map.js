@@ -44,7 +44,7 @@ export default class Map extends React.Component {
                 },
                 "properties": {
                     "title":item.title,
-                    "image":item.mediaFull,
+                    "image":item.photo,
                     "icon": {
                         "iconUrl": "icons/shark.svg",
                         "iconSize": [50, 50], // size of the icon
