@@ -12,7 +12,6 @@ module.exports = (
   <Route path="/" component={App}>
     <IndexRoute component={User} />
     <Route path="/pro" component={Pro} />
-    <Route path="/user" component={User} />
     <Route path="*" component={Error} />
   </Route>
 );

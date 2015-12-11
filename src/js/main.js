@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, History} from 'react-router';
-
-
+import createBrowserHistory from 'history/lib/createBrowserHistory';
 import routes from './config/routes.js';
 
+const history = createBrowserHistory();
 
 ReactDOM.render(
-  <Router>{routes}</Router>,
+  <Router history={history}>{routes}</Router>,
   document.getElementById('main')
 )
 
