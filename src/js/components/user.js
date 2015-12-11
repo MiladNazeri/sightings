@@ -59,6 +59,7 @@ export default class User extends React.Component {
     })
   }
   render() {
+    console.log("user map")
     return (
         <div style={styles.mainContainer}>
           {this.state.openModal && <MyModal openModal={this.state.openModal} user={true} pro={false} closeModal={this._closeModal} whaleOptions={this.state.whaleOptions} /> }
