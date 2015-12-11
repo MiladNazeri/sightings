@@ -45,6 +45,7 @@ export default class Map extends React.Component {
                 "properties": {
                     "title":item.title,
                     "image":item.photo,
+                    "story":item.story,
                     "icon": {
                         "iconUrl": "icons/shark.svg",
                         "iconSize": [50, 50], // size of the icon
@@ -62,13 +63,13 @@ export default class Map extends React.Component {
             var marker = e.layer,
             feature = marker.feature;
             marker.setIcon(L.icon(feature.properties.icon));
-            var content = '<h2>'+ feature.properties.title+'<\/h2>' + '<img src="'+feature.properties.image+'" alt="" style="max-width:150px">';
+            var content = '<h2>'+ feature.properties.title+'<\/h2>' + '<img src="'+feature.properties.image+'" alt="" style="max-width:150px">' + '<br />'+ '<p>'+feature.properties.story'</p>';
             marker.bindPopup(content);
         });
         myLayer.setGeoJSON(this.state.allMapboxMarkers)
         mapBox.fitBounds(myLayer.getBounds())
     }
-    
+
     _showAllSightings(mapBox, myLayer){
         // this._initMap();
             console.log("initiating map")
