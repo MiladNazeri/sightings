@@ -80,18 +80,7 @@ export default class Map extends React.Component {
         L.mapbox.accessToken = this.state.mapToken;
         this.mapBox = L.mapbox.map('mapbox', 'mapbox.streets').setView([40.718243, -73.99868], 14);
         var myLayer = L.mapbox.featureLayer().addTo(this.mapBox);
-        api.getSightings()
-        .then( (res) => {
-            console.log("res",res)
-            var sightings = res.data
-            this.setState({
-                sightings: sightings,
-            })
-        })
-        .then(() => {
-            console.log("showing Sightings")
-            this._showAllSightings(this.mapBox, myLayer);
-        })
+        this._showAllSightings(this.mapBox, myLayer);
 
     }
     componentWillUnmount() {

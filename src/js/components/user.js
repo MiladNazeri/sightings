@@ -30,10 +30,12 @@ export default class User extends React.Component {
 
   }
   _closeModal(){
-    this.state.getSightings.call(this);
     this.setState({
+      sightings: [],
       openModal: false
     })
+    this.state.getSightings.call(this);
+
   }
   _getSightings(){
     api.getSightings()
@@ -64,7 +66,7 @@ export default class User extends React.Component {
     return (
         <div style={styles.mainContainer}>
           {this.state.openModal && <MyModal openModal={this.state.openModal} user={true} pro={false} closeModal={this._closeModal} whaleOptions={this.state.whaleOptions} /> }
-          <Map sightings={this.state.sightings} whales={this.state.whales} />
+          {this.state.sightings.length > 0 && <Map sightings={this.state.sightings} whales={this.state.whales} /> }
           <div id = "addButton" onClick={this._addButtonPress}><div><img id="addButtonIcon" src="images/add-icon.png"/></div></div>
         </div>
     )
