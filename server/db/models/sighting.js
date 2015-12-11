@@ -21,7 +21,6 @@ var sightingSchema = new mongoose.Schema({
 	},
 	notAppropriate: {
 		type: Boolean,
-		required: true,
 		default: false
 	},
 	title: {
