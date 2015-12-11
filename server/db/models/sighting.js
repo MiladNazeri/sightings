@@ -42,8 +42,7 @@ var sightingSchema = new mongoose.Schema({
 	},
 	proWhalePick: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Whale',
-		required: true
+		ref: 'Whale'
 	},
 	proComment: {
 		type: String
