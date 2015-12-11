@@ -37,7 +37,7 @@ var sightingSchema = new mongoose.Schema({
 	},
 	mediaThumbnail: String,
 	pending: {
-		type: String,
+		type: Boolean,
 		default: true
 	},
 	proWhalePick: {
