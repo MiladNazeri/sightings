@@ -40,4 +40,25 @@
         })
     })
 
+    router.post('/upload_s3', function(req,res){
+    var s3 = new aws.S3( { params: {Bucket: S3_BUCKET} } );
+    buf = new Buffer(req.body.imageObj.file.replace(/^data:image\/\w+;base64,/, ""),'base64')
+     var data = {
+    Key: req.body.imageObj.filename,
+    Body: buf,
+    ContentEncoding: 'base64',
+    ContentType: 'image/jpeg'
+    };
+
+    s3.putObject(data, function(err, data){
+          if (err) {
+            console.log(err);
+            console.log('Error uploading data: ', data);
+          } else {
+            console.log('succesfully uploaded the image!');
+          }
+      });
+
+    })
+
     module.exports = router

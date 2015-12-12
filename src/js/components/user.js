@@ -17,16 +17,20 @@ export default class User extends React.Component {
       sightings: [],
       sightingOptions: [],
       openModal: false,
-      getSightings: this._getSightings
+      getSightings: this._getSightings,
+      coordinates: ""
     }
     this._addButtonPress = this._addButtonPress.bind(this)
     this._closeModal = this._closeModal.bind(this)
     this._getSightings = this._getSightings.bind(this)
   }
-  _addButtonPress(){
+  _addButtonPress(coordinates){
+    console.log("coordinates from function", coordinates)
+    console.log("coordinates from state", this.state.coordinates)
     console.log(this);
     this.setState({
-      openModal: true
+      openModal: true,
+      coordinates: coordinates
     })
     console.log("done", this);
 
@@ -70,8 +74,8 @@ export default class User extends React.Component {
     console.log("user map")
     return (
         <div style={styles.mainContainer}>
-          {this.state.openModal && <MyModal openModal={this.state.openModal} user={true} pro={false} closeModal={this._closeModal} whaleOptions={this.state.whaleOptions} /> }
-          {this.state.sightings.length > 0 && <Map sightings={this.state.sightings} whales={this.state.whales} /> }
+          {this.state.openModal && <MyModal openModal={this.state.openModal} user={true} pro={false} closeModal={this._closeModal} whaleOptions={this.state.whaleOptions} coordinates={this.state.coordinates}  /> }
+          {this.state.sightings.length > 0 && <Map sightings={this.state.sightings} whales={this.state.whales} addButtonPress={this._addButtonPress}/> }
           <div id = "addButton" onClick={this._addButtonPress}><div><img id="addButtonIcon" src="images/add-icon.png"/></div></div>
         </div>
     )
