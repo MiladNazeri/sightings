@@ -41,7 +41,9 @@
     })
 
     router.post('/upload_s3', function(req,res){
+    console.log("req.body:",req.body)
     var s3 = new aws.S3( { params: {Bucket: S3_BUCKET} } );
+    console.log("Buffer:", Buffer)
     buf = new Buffer(req.body.file.replace(/^data:image\/\w+;base64,/, ""),'base64')
      var data = {
     Key: req.body.filename,
