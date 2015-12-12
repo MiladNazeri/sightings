@@ -50,7 +50,7 @@
     Key: req.body.filename,
     Body: buf,
     ContentEncoding: 'base64',
-    ContentType: 'image/jpeg'
+    ContentType: 'image/jpeg',
     ACL: 'public-read'
     };
 
