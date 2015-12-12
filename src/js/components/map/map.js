@@ -1,5 +1,6 @@
 import React from 'react';
 import api from '../../api/api.js';
+import userForm from '../form/userForm.js'
 
 export default class Map extends React.Component {
 
@@ -50,7 +51,7 @@ export default class Map extends React.Component {
             feature = marker.feature;
             if(feature){
                 marker.setIcon(L.icon(feature.properties.icon));
-                var content = '<h2>'+ feature.properties.title+'<\/h2>' + '<img src="'+feature.properties.image+'" alt="" style="max-width:150px">' + '<br />'+ '<p>'+feature.properties.story 
+                var content = '<h2>'+ feature.properties.title+'<\/h2>' + '<img src="'+feature.properties.image+'" alt="" style="max-width:150px">' + '<br />'+ '<p>'+feature.properties.story
                 + '</p><div id = "addButton" onClick={this._addButtonPress}><div><img id="addButtonIcon" src="images/add-icon.png"/></div></div>' ;
                 marker.bindPopup(content);
             }
@@ -66,11 +67,16 @@ export default class Map extends React.Component {
     }
 
     componentDidMount() {
+        var that = this;
+        console.log("that", that)
         L.mapbox.accessToken = this.state.mapToken;
         this.mapBox = L.mapbox.map('mapbox', 'geng0610.odfm6c8b').setView([40.718243, -73.99868], 14);
         this.mapBox.on('click', addMarker);
         var myLayer = L.mapbox.featureLayer().addTo(this.mapBox);
         var newMarker;
+        var userF = <userForm />;
+        console.log("userF", userF)
+        console.log("AddButton Press", that.props.addButtonPress)
         function addMarker(e){
             // Add marker to map at click location; add popup window
             if(newMarker){
@@ -78,8 +84,9 @@ export default class Map extends React.Component {
                 newMarker.openPopup();
             } else{
                 newMarker = new L.marker(e.latlng).addTo(myLayer);
-                newMarker.bindPopup("<div>hey</div>");
-                newMarker.openPopup();
+                newMarker.bindPopup();
+                that.props.addButtonPress(e.latlng)
+
             }
             console.log("new marker", newMarker);
         }
