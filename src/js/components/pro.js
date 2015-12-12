@@ -21,6 +21,7 @@ export default class Pro extends React.Component {
     }
     this._addButtonPress = this._addButtonPress.bind(this)
     this._closeModal = this._closeModal.bind(this)
+    this._getSightings = this._getSightings.bind(this)
   }
   _addButtonPress(){
     this.setState({
@@ -29,10 +30,12 @@ export default class Pro extends React.Component {
 
   }
   _closeModal(){
-    this.state.getSightings();
     this.setState({
+      sightings: [],
       openModal: false
     })
+    this.state.getSightings.call(this);
+
   }
   _getSightings(){
     api.getSightings()
@@ -71,7 +74,7 @@ export default class Pro extends React.Component {
             closeModal={this._closeModal}
             whaleOptions={this.state.whaleOptions}
             sighting={sighting} /> }
-          <Map sightings={this.state.sightings} whales={this.state.whales} />
+           {this.state.sightings.length > 0 && <Map sightings={this.state.sightings} whales={this.state.whales} /> }
           <div id = "addButton" onClick={this._addButtonPress}><div><img id="addButtonIcon" src="images/add-icon.png"/></div></div>
         </div>
     )

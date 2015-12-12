@@ -6,10 +6,12 @@ var IndexRoute = Router.IndexRoute;
 import App from '../components/app';
 import User from '../components/user';
 import Pro from '../components/pro';
+import Error from '../components/error';
 
 module.exports = (
   <Route path="/" component={App}>
-    <Route path="/pro" component={Pro} />
     <IndexRoute component={User} />
+    <Route path="/pro" component={Pro} />
+    <Route path="*" component={Error} />
   </Route>
 );

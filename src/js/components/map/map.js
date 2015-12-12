@@ -44,7 +44,8 @@ export default class Map extends React.Component {
                 },
                 "properties": {
                     "title":item.title,
-                    "image":item.mediaFull,
+                    "image":item.photo,
+                    "story":item.story,
                     "icon": {
                         "iconUrl": "icons/shark.svg",
                         "iconSize": [50, 50], // size of the icon
@@ -62,13 +63,13 @@ export default class Map extends React.Component {
             var marker = e.layer,
             feature = marker.feature;
             marker.setIcon(L.icon(feature.properties.icon));
-            var content = '<h2>'+ feature.properties.title+'<\/h2>' + '<img src="'+feature.properties.image+'" alt="" style="max-width:150px">';
+            var content = '<h2>'+ feature.properties.title+'<\/h2>' + '<img src="'+feature.properties.image+'" alt="" style="max-width:150px">' + '<br />'+ '<p>'+feature.properties.story + '</p>';
             marker.bindPopup(content);
         });
         myLayer.setGeoJSON(this.state.allMapboxMarkers)
         mapBox.fitBounds(myLayer.getBounds())
     }
-    
+
     _showAllSightings(mapBox, myLayer){
         // this._initMap();
             console.log("initiating map")
@@ -79,18 +80,7 @@ export default class Map extends React.Component {
         L.mapbox.accessToken = this.state.mapToken;
         this.mapBox = L.mapbox.map('mapbox', 'mapbox.streets').setView([40.718243, -73.99868], 14);
         var myLayer = L.mapbox.featureLayer().addTo(this.mapBox);
-        api.getSightings()
-        .then( (res) => {
-            console.log("res",res)
-            var sightings = res.data
-            this.setState({
-                sightings: sightings,
-            })
-        })
-        .then(() => {
-            console.log("showing Sightings")
-            this._showAllSightings(this.mapBox, myLayer);
-        })
+        this._showAllSightings(this.mapBox, myLayer);
 
     }
     componentWillUnmount() {

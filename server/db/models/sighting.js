@@ -21,7 +21,6 @@ var sightingSchema = new mongoose.Schema({
 	},
 	notAppropriate: {
 		type: Boolean,
-		required: true,
 		default: false
 	},
 	title: {
@@ -37,13 +36,12 @@ var sightingSchema = new mongoose.Schema({
 	},
 	mediaThumbnail: String,
 	pending: {
-		type: String,
+		type: Boolean,
 		default: true
 	},
 	proWhalePick: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Whale',
-		required: true
+		ref: 'Whale'
 	},
 	proComment: {
 		type: String
