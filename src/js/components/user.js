@@ -24,9 +24,11 @@ export default class User extends React.Component {
     this._getSightings = this._getSightings.bind(this)
   }
   _addButtonPress(){
+    console.log(this);
     this.setState({
       openModal: true
     })
+    console.log("done", this);
 
   }
   _closeModal(){
@@ -38,12 +40,15 @@ export default class User extends React.Component {
 
   }
   _getSightings(){
+    console.log(this);
+    var _this = this;
     api.getSightings()
     .then( (sightings) => {
-      this.setState({
+      _this.setState({
         sightings: sightings.data
       })
     })
+    console.log("underscore", _this);
   }
   componentDidMount(){
     api.getWhales()
