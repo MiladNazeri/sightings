@@ -1,11 +1,10 @@
 import React from 'react';
-import Modal from 'react-modal';
 import api from '../../api/api.js';
 import axios from 'axios';
 import ReactSelect from 'react-select';
 
 
-export default class MyModal extends React.Component {
+export default class userForm extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -144,7 +143,7 @@ export default class MyModal extends React.Component {
       })
       var sighting = {
         title: this.state.title,
-        location: [this.props.coordinates.lat, this.props.coordinates.lng],
+        location: [this.state.lat, this.state.long],
         story: this.state.story,
         photo: this.state.imagePath
       }
@@ -184,14 +183,15 @@ export default class MyModal extends React.Component {
 
   render(){
     return(
-      <Modal
-        isOpen={this.state.modalIsOpen}
-        onRequestClose={this.closeModal}
-        style={customStyles}>
-        {this.state.user &&
           <div>
             <h1>Title</h1>
             <input type="text" value={this.state.title} onChange={this._titleChange} />
+
+            <h1>Lat</h1>
+            <input type="text" value={this.state.lat} onChange={this._latHandle} />
+
+            <h1>Long</h1>
+            <input type="text" value={this.state.long} onChange={this._longHandle} />
 
             <h1>Upload Picture</h1>
             <input type="file" onChange={this._submitPicture} />
@@ -202,35 +202,6 @@ export default class MyModal extends React.Component {
 
         <button onClick={this._submitUser}>submit</button>
         </div>
-        }
-        {this.state.pro &&
-            <div>
-            <h1>Title</h1>
-            {this.state.sighting.title}
-            <h1>Location</h1>
-            {this.state.sighting.location}
-            <h1>Photo</h1>
-            <img src={this.state.sighting.photo} />
-            {this.state.sighting.story && <p> {this.state.sighting.story}</p> }
-            <h1>Please choose Whale Type</h1>
-            <ReactSelect
-                autofocus
-                options={this.props.whaleOptions}
-                onChange={this._updateWhaleValue}
-                value={this.state.whalePick}
-                placeholder="Choose a Whale" />
-            <h1>Add a Comment?</h1>
-            <input type="checkbox" onChange={this._addProCommentHandle} />
-
-            {this.state.addProComment && <textarea value={this.state.proComment} onChange={this._proComment} /> }
-            <h1>Approve Sighting?</h1>
-            <input type="checkbox" onChange={this._addProApprove} />
-
-        <button onClick={this._submitPro}>submit</button>
-        </div>
-        }
-        <button onClick={this._cancel}>cancel</button>
-      </Modal>
       )
   }
 }
