@@ -23,24 +23,29 @@ export default class User extends React.Component {
     this._closeModal = this._closeModal.bind(this)
   }
   _addButtonPress(){
+    console.log(this);
     this.setState({
       openModal: true
     })
+    console.log("done", this);
 
   }
   _closeModal(){
-    this.state.getSightings();
+    this.state.getSightings.call(this);
     this.setState({
       openModal: false
     })
   }
   _getSightings(){
+    console.log(this);
+    var _this = this;
     api.getSightings()
     .then( (sightings) => {
-      this.setState({
+      _this.setState({
         sightings: sightings.data
       })
     })
+    console.log("underscore", _this);
   }
   componentDidMount(){
     api.getWhales()
