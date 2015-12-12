@@ -32,10 +32,6 @@ export default class User extends React.Component {
 
   }
   _closeModal(){
-<<<<<<< HEAD
-    this.state.getSightings.call(this);
-=======
->>>>>>> master
     this.setState({
       sightings: [],
       openModal: false

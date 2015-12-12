@@ -9,9 +9,6 @@ export default class Map extends React.Component {
             mapToken: 'pk.eyJ1IjoiZ2VuZzA2MTAiLCJhIjoiM2E5YWIzMDU0YmQxZGVhMTI0NWFkZGI5NTk2Njk2ODkifQ.batYlvCbe9tWYG8Sc_OTZw',
             mapBox: null,
             mapView: {
-                container: 'map',
-                style: 'mapbox://styles/mapbox/streets-v8',
-                center: [-122.6, 45.5],
                 zoom: 9
             },
             allMapboxMarkers: [],
@@ -19,17 +16,6 @@ export default class Map extends React.Component {
             whales: this.props.whales
         }
     }
-    // _initMap(){
-    //     var canv = this.refs.map;
-    //     var nyc  = new google.maps.LatLng(40.7516399, -73.9746429);
-    //     var opts = {
-    //       center   : nyc,
-    //       zoom     : 14,
-    //       mapTypeId: google.maps.MapTypeId.ROADMAP
-    //     }
-    //       this.state.map = new google.maps.Map(canv, opts);
-    //       new google.maps.Marker({ position: nyc, map: this.state.map, title: 'New York City Baby!' });
-    // }
     _setMarkersOnMap(mapBox, myLayer, object){
         this.setState({
             allMapboxMarkers : []
@@ -47,7 +33,7 @@ export default class Map extends React.Component {
                     "image":item.photo,
                     "story":item.story,
                     "icon": {
-                        "iconUrl": "icons/shark.svg",
+                        "iconUrl": "icons/whale.svg",
                         "iconSize": [50, 50], // size of the icon
                         "iconAnchor": [25, 25], // point of the icon which will correspond to marker's location
                         "popupAnchor": [0, -25], // point from which the popup should open relative to the iconAnchor
@@ -62,9 +48,12 @@ export default class Map extends React.Component {
         myLayer.on('layeradd', function(e) {
             var marker = e.layer,
             feature = marker.feature;
-            marker.setIcon(L.icon(feature.properties.icon));
-            var content = '<h2>'+ feature.properties.title+'<\/h2>' + '<img src="'+feature.properties.image+'" alt="" style="max-width:150px">' + '<br />'+ '<p>'+feature.properties.story + '</p>';
-            marker.bindPopup(content);
+            if(feature){
+                marker.setIcon(L.icon(feature.properties.icon));
+                var content = '<h2>'+ feature.properties.title+'<\/h2>' + '<img src="'+feature.properties.image+'" alt="" style="max-width:150px">' + '<br />'+ '<p>'+feature.properties.story 
+                + '</p><div id = "addButton" onClick={this._addButtonPress}><div><img id="addButtonIcon" src="images/add-icon.png"/></div></div>' ;
+                marker.bindPopup(content);
+            }
         });
         myLayer.setGeoJSON(this.state.allMapboxMarkers)
         mapBox.fitBounds(myLayer.getBounds())
@@ -78,8 +67,22 @@ export default class Map extends React.Component {
 
     componentDidMount() {
         L.mapbox.accessToken = this.state.mapToken;
-        this.mapBox = L.mapbox.map('mapbox', 'mapbox.streets').setView([40.718243, -73.99868], 14);
+        this.mapBox = L.mapbox.map('mapbox', 'geng0610.odfm6c8b').setView([40.718243, -73.99868], 14);
+        this.mapBox.on('click', addMarker);
         var myLayer = L.mapbox.featureLayer().addTo(this.mapBox);
+        var newMarker;
+        function addMarker(e){
+            // Add marker to map at click location; add popup window
+            if(newMarker){
+                newMarker.setLatLng(e.latlng)
+                newMarker.openPopup();
+            } else{
+                newMarker = new L.marker(e.latlng).addTo(myLayer);
+                newMarker.bindPopup("<div>hey</div>");
+                newMarker.openPopup();
+            }
+            console.log("new marker", newMarker);
+        }
         this._showAllSightings(this.mapBox, myLayer);
 
     }
@@ -113,22 +116,3 @@ var styles = {
 
   }
 }
-
-
-
-
-// <div ref="map" style={styles.map}></div>
-
-
-// <div id="mapFilter">
-//     <div id = "mapFilterTitle">Filter</div>
-//     <select value={this.state.selectedFilterValue} onChange={this._selectFilterHandler}>
-//         <option value="select">Select an animal</option>
-//          {animalOptions}
-//     </select>
-// </div>
-
-// var animalOptions = [];
-// this.state.allAnimalsSelect.forEach( (option, index) => {
-//   animalOptions.push(<option key={index} value={option.value}>{option.label}</option>)
-// })
