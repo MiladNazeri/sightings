@@ -51,6 +51,7 @@
     Body: buf,
     ContentEncoding: 'base64',
     ContentType: 'image/jpeg'
+    ACL: 'public-read'
     };
 
     s3.putObject(data, function(err, data){
