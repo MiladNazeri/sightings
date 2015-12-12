@@ -44,7 +44,7 @@
     console.log("req.body:",req.body)
     var s3 = new aws.S3( { params: {Bucket: S3_BUCKET} } );
     console.log("Buffer:", Buffer)
-    var buf = new Buffer(req.body.file.replace(/^data:image\/\w+;base64,/, ""),'base64')
+    var buf = new Buffer(req.body.file,'base64')
     console.log("this is buf:", buf)
      var data = {
     Key: req.body.filename,
