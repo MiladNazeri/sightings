@@ -61,8 +61,7 @@ export default class Map extends React.Component {
     }
 
     _showAllSightings(mapBox, myLayer){
-        // this._initMap();
-            console.log("initiating map")
+        console.log("initiating map")
         this._setMarkersOnMap(mapBox, myLayer, this.state.sightings)
     }
 
@@ -70,7 +69,7 @@ export default class Map extends React.Component {
         var that = this;
         console.log("that", that)
         L.mapbox.accessToken = this.state.mapToken;
-        this.mapBox = L.mapbox.map('mapbox', 'geng0610.odfm6c8b').setView([40.718243, -73.99868], 14);
+        this.mapBox = L.mapbox.map('mapbox', 'splash.71a086f5').setView([40.718243, -73.99868], 14);
         this.mapBox.on('click', addMarker);
         var myLayer = L.mapbox.featureLayer().addTo(this.mapBox);
         var newMarker;

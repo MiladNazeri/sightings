@@ -4,7 +4,7 @@ var Route = Router.Route;
 var IndexRoute = Router.IndexRoute;
 
 import App from '../components/app';
-import User from '../components/user';
+import User from '../components/userView';
 import Pro from '../components/pro';
 import Error from '../components/error';
 
