@@ -4,13 +4,15 @@ var Route = Router.Route;
 var IndexRoute = Router.IndexRoute;
 
 import App from '../components/app';
+import Splash from '../components/splashView';
 import User from '../components/userView';
-import Pro from '../components/pro';
+import Pro from '../components/proView';
 import Error from '../components/error';
 
 module.exports = (
   <Route path="/" component={App}>
-    <IndexRoute component={User} />
+    <IndexRoute component={Splash} />
+    <Route path="/sightings" component={User} />
     <Route path="/pro" component={Pro} />
     <Route path="*" component={Error} />
   </Route>
