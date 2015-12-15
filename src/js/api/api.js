@@ -15,7 +15,7 @@ var api = {
         return axios.post(`${url}sightings/`, sighting)
     },
     updateSighting(sighting) {
-        return axios.put(`${url}sightings/`)
+        return axios.put(`${url}sightings/`, sighting)
     },
 }
 
