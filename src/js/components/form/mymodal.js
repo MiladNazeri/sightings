@@ -47,7 +47,6 @@ export default class MyModal extends React.Component {
     this._addProCommentHandle = this._addProCommentHandle.bind(this)
     this._addProApprove = this._addProApprove.bind(this)
     this._cancel = this._cancel.bind(this)
-
   }
   _initModal(){
     this.setState({

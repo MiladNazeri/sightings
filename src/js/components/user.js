@@ -61,14 +61,14 @@ export default class User extends React.Component {
       this.setState({
         whales: whales.data,
         whaleOptions: whaleOptions
-      })
-  })
+      });
+  });
     api.getSightings()
     .then( (sightings) => {
       this.setState({
         sightings: sightings.data
-      })
-    })
+      });
+    });
   }
   render() {
     console.log("user map")

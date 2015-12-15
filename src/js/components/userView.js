@@ -66,6 +66,9 @@ export default class Map extends React.Component {
                     }
                 }
             })
+            if(item.pending){
+                marker.properties.icon.iconUrl = "icons/question.svg";
+            }
             // console.log("this is an icon", marker.properties.icon);
             this.state.allMapboxMarkers.push(marker)
         })
@@ -75,7 +78,7 @@ export default class Map extends React.Component {
             feature = marker.feature;
             if(feature){
                 marker.setIcon(L.icon(feature.properties.icon));
-                var content = '<h2>'+ feature.properties.title+'<\/h2>' + '<img src="'+feature.properties.image+'" alt="" style="max-width:150px">' + '<br />'+ '<p>'+feature.properties.story;
+                var content = "<div class='title-text'>"+ feature.properties.title+'</div>' + '<img src="'+feature.properties.image+'" alt="" style="width:100%">' + '<br />'+ '<div class="story-content">'+feature.properties.story+'</div>';
                 marker.bindPopup(content);
             }
         });
@@ -118,30 +121,30 @@ export default class Map extends React.Component {
     	that.mapBox.on('click', addMarker);
     	myLayer = L.mapbox.featureLayer().addTo(that.mapBox);
         var userForm = {}
-        userForm.Title = "<div>Title</div><input id='form-title' type='text'/>";
+        userForm.Title = "<div class='title-text'>Title of your sighting</div><input id='form-title' type='text'/>";
         userForm.LatLng = "";
-        userForm.Picture = "<div>Picture</div><input id='form-picture' type='file'>";
-        userForm.Story = "<div>Story</div><textarea  id='form-story'></textarea>";
-        userForm.submitButton = "<button id='submit-form'>submit</button>";
+        userForm.Picture = "<div class='picture-text'>Share your sighting</div><input id='form-picture' type='file'>";
+        userForm.Story = "<div class='story-text'>Story behind this sighting</div><textarea class='story-content' id='form-story'></textarea>";
+        userForm.submitButton = "<div class='button-container'><button id='submit-form'>submit</button>";
         function generateSubmit(latlng){
+            // console.log("clicked");
+            var lat = latlng.lat;
+            var long = latlng.lng;
+            // console.log(title, lat, long, story, file, filename, filetype);
+            that.state.lat = lat;
+            that.state.long = long;
+            // console.log("posting to node")
 			$("body").on("click", "#submit-form", function(e){
-				// console.log("clicked");
-				var title = $("#form-title").val();
-				var lat = latlng.lat;
-				var long = latlng.lng;
-				var story = $("#form-story").val();
-				var file = $("#form-picture").prop('files')[0];
-				var filename = file.name;
-				var filetype = file.type;
-				// console.log(title, lat, long, story, file, filename, filetype);
-				that.state.title = title;
-				that.state.lat = lat;
-				that.state.long = long;
-				that.state.story = story;
-				that.state.filename = filename;
-				that.state.filetype = filetype;
-				that.state.file = file;
-			    // console.log("posting to node")
+                var title = $("#form-title").val();
+                var story = $("#form-story").val();
+                var file = $("#form-picture").prop('files')[0];
+                var filename = file.name;
+                var filetype = file.type;
+                that.state.title = title;
+                that.state.story = story;
+                that.state.filename = filename;
+                that.state.filetype = filetype;
+                that.state.file = file;
 				axios.post('/api/s3/sign_s3', {
 				    filename: that.state.filename,
 				    filetype: that.state.filetype
@@ -174,19 +177,40 @@ export default class Map extends React.Component {
 					});
 				});
 			});
+            console.log("this is the state after onclick", that.state);
+        }
+
+        function updateSubmit(latlng){
+            var lat = latlng.lat;
+            var long = latlng.lng;
+            that.state.lat = lat;
+            that.state.long = long;
+            console.log("this is the state after updatesubmit",that.state);
         }
 
         function addMarker(e){
             if(newMarker){
             	console.log("new Marker exists", newMarker);
                 newMarker.setLatLng(e.latlng)
+                userForm.LatLng = "<div id = 'form-latlng'>"+e.latlng+"</div>"
+                popupContent ="";
+                for (var element in userForm){
+                    popupContent = popupContent + userForm[element];
+                }
+                newMarker.bindPopup(popupContent);
                 newMarker.openPopup();
+                updateSubmit(e.latlng);
             } else{
-                newMarker = new L.marker(e.latlng).addTo(myLayer);
-                userForm.LatLng = "<div>"+e.latlng;+"</div>"
+                newMarker = L.marker(e.latlng, {
+                    draggable: true
+                });
+                newMarker.addTo(myLayer);
+                console.log(newMarker);
+                newMarker.options.draggable = true;
+                userForm.LatLng = "<div id = 'form-latlng'>"+e.latlng+"</div>"
                 var popupContent ="";
                 for (var element in userForm){
-                	popupContent = popupContent + userForm[element];
+                    popupContent = popupContent + userForm[element];
                 }
                 newMarker.bindPopup(popupContent);
                 newMarker.openPopup();
