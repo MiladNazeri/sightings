@@ -57,6 +57,7 @@ export default class Map extends React.Component {
                     "title":item.title,
                     "image":item.photo,
                     "story":item.story,
+                    "proComment":item.proComment,
                     "icon": {
                         "iconUrl": "icons/whale.svg",
                         "iconSize": [50, 50], // size of the icon
@@ -78,7 +79,7 @@ export default class Map extends React.Component {
             feature = marker.feature;
             if(feature){
                 marker.setIcon(L.icon(feature.properties.icon));
-                var content = "<div class='title-text'>"+ feature.properties.title+'</div>' + '<img src="'+feature.properties.image+'" alt="" style="width:100%">' + '<br />'+ '<div class="story-content">'+feature.properties.story+'</div>';
+                var content = "<div class='title-text'>"+ feature.properties.title+'</div>' + '<img src="'+feature.properties.image+'" alt="" style="width:100%">' + '<br />'+ '<div class="story-content">'+feature.properties.story+'</div>' + '<div class="proComment-content"> Whale Pro Reply: <br />' +feature.properties.proComment+'</div>';
                 marker.bindPopup(content);
             }
         });

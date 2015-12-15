@@ -26,8 +26,8 @@ a, a:hover{
 }
 
 #title{
-  	position: absolute; 
-  	top: 20px; 
+  	position: absolute;
+  	top: 20px;
   	left: 100px;
   	z-index: 100;
   	font-size: 36px;
@@ -36,9 +36,9 @@ a, a:hover{
 }
 
 #mapbox{
-  	position: absolute; 
+  	position: absolute;
   	top: 0;
-  	bottom: 0; 
+  	bottom: 0;
   	left: 0;
   	right: 0;
 }
@@ -157,6 +157,13 @@ a, a:hover{
 }
 
 .story-content{
+	width: 100%;
+	min-height: 48px;
+	border-radius: 2px;
+	margin-bottom: 10px;
+}
+
+.proComment-content{
 	width: 100%;
 	min-height: 48px;
 	border-radius: 2px;
