@@ -4,8 +4,9 @@ var mongoose = require('mongoose')// var Animal =
 var Sighting = mongoose.model('Sighting');
 
 router.get('/', function (req, res, next) {
-	Sighting.find().populate('animal userId').exec()
+	Sighting.find()
 		.then(function (sightings) {
+			console.log("found sightings:", sightings)
 			return res.send(sightings);
 		}, next);
 });
@@ -19,18 +20,19 @@ router.post('/', function (req, res, next) {
 })
 
 router.put('/', function (req, res, next) {
-
 	console.log("req.body", req.body)
 	Sighting.findById(req.body._id)
 	.then( (sighting) =>{
 		console.log("sighting", sighting)
 		// sighting.proWhalePick = req.body.sighting.proWhalePick;
-		sighting.proComment = req.body.sighting.proComment;
-		sighting.proApprove = req.body.sighting.proApprove;
+		sighting.proComment = req.body.proComment;
+		sighting.proApprove = req.body.proApprove;
+		sighting.pending = req.body.pending;
+		sighting.notAppropriate = req.body.notAppropriate;
 		sighting.save()
 		.then( (result) => {
 			console.log("result of put", result)
-			return res.send (result)
+			return res.send(result)
 		}, next)
 	})
 })

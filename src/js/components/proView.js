@@ -41,6 +41,8 @@ export default class Map extends React.Component {
         this._proComment = this._proComment.bind(this)
     }
     _setMarkersOnMap(mapBox, myLayer, object){
+        var that = this;
+        var newMarker;
         this.setState({
             allMapboxMarkers : []
         })
@@ -84,22 +86,22 @@ export default class Map extends React.Component {
                 content = content + "<div class='reply-text'>Reply</div><textarea class='reply-content' id='reply-form-"+marker.feature.id+"' style='width:100%'></textarea>";
                 content = content + "<div class='button-container'>"+"<button class='reject-button'id='reject-form-"+marker.feature.id+"'>Reject</button>"+"<button class='approve-button'id='approve-form-"+marker.feature.id+"'>Approve</button>"+"</div>";
                 marker.bindPopup(content);
-                $("body").on("click", "#reject-form-"+marker.feature.id, function(e){
+                $("body").on("click", "#approve-form-"+marker.feature.id, function(e){
                     var approvedSighting = marker.feature.original
                     approvedSighting.proComment = $("#reply-form-"+marker.feature.id).val();
                     approvedSighting.pending = false;
                     approvedSighting.notAppropriate = false;
-                    console.log(approvedSighting);
+                    approvedSighting.proApprove = true;
+                    console.log("approved sighting", approvedSighting);
+                    console.log("that", that)
                     api.updateSighting(approvedSighting)
-                    .then( () => {
-                        this.setState({
-                        modalIsOpen: false
-                        })
-                        this._initModal();
-                        this.state.closeModal()
-                    }).then(() => {
-                        api.getSightings()
+                    .then((sighting) => {
+                        console.log("update sighting", sighting)
+                        return api.getSightings()
+                    })
                         .then( (sightings) => {
+                            console.log("that 2", that)
+                            console.log("Sighting back", sightings)
                             that.state.sightings = sightings.data;
                             that.mapBox.removeLayer(myLayer);
                             myLayer = {};
@@ -108,23 +110,19 @@ export default class Map extends React.Component {
                             that._showAllSightings(that.mapBox, myLayer);
                         });
                     });
-                });
-                $("body").on("click", "#approve-form-"+marker.feature.id, function(e){
+                $("body").on("click", "#reject-form-"+marker.feature.id, function(e){
                     var rejectedSighting = marker.feature.original
                     rejectedSighting.proComment = $("#reply-form-"+marker.feature.id).val();
                     rejectedSighting.pending = false;
                     rejectedSighting.notAppropriate = true;
-                    console.log(rejectedSighting);
+                    rejectedSighting.proApprove = false;
+                    console.log("rejected sighting", rejectedSighting);
                     api.updateSighting(rejectedSighting)
-                    .then( () => {
-                        this.setState({
-                        modalIsOpen: false
-                        })
-                        this._initModal();
-                        this.state.closeModal()
-                    }).then(() => {
-                        api.getSightings()
+                    .then((sighting) => {
+                        return api.getSightings()
+                    })
                         .then( (sightings) => {
+                            console.log("Sighting back", sighting)
                             that.state.sightings = sightings.data;
                             that.mapBox.removeLayer(myLayer);
                             myLayer = {};
@@ -133,9 +131,8 @@ export default class Map extends React.Component {
                             that._showAllSightings(that.mapBox, myLayer);
                         });
                     });
-                });
-            }
-        });
+             }
+        })
         myLayer.setGeoJSON(this.state.allMapboxMarkers)
         mapBox.fitBounds(myLayer.getBounds())
     }

@@ -9,6 +9,7 @@ var api = {
         return axios.post(`${url}whales/`, whale)
     },
     getSightings() {
+        console.log("Api get sightings")
         return axios.get(`${url}sightings/`)
     },
     createSighting(sighting) {
