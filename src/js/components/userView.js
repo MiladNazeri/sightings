@@ -79,7 +79,12 @@ export default class Map extends React.Component {
             feature = marker.feature;
             if(feature){
                 marker.setIcon(L.icon(feature.properties.icon));
+                if (feature.properties.proComment) {
                 var content = "<div class='title-text'>"+ feature.properties.title+'</div>' + '<img src="'+feature.properties.image+'" alt="" style="width:100%">' + '<br />'+ '<div class="story-content">'+feature.properties.story+'</div>' + '<div class="proComment-content"> Whale Pro Reply: <br />' +feature.properties.proComment+'</div>';
+                } else {
+                    var content = "<div class='title-text'>"+ feature.properties.title+'</div>' + '<img src="'+feature.properties.image+'" alt="" style="width:100%">' + '<br />'+ '<div class="story-content">'+feature.properties.story+'</div>';
+
+                }
                 marker.bindPopup(content);
             }
         });
