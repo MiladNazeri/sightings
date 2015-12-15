@@ -178,7 +178,6 @@ export default class userForm extends React.Component {
     })
     this._initModal();
     this.state.closeModal()
-
   }
 
   render(){
@@ -200,8 +199,8 @@ export default class userForm extends React.Component {
             <input type="checkbox" onChange={this._addStoryHandle} />
             {this.state.addStory && <textarea value={this.state.story} onChange={this._storyChange} />}
 
-        <button onClick={this._submitUser}>submit</button>
-        </div>
+            <button onClick={this._submitUser}>submit</button>
+          </div>
       )
   }
 }
