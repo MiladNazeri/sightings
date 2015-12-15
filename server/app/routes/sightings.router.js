@@ -24,7 +24,7 @@ router.put('/', function (req, res, next) {
 	Sighting.findById(req.body._id)
 	.then( (sighting) =>{
 		console.log("sighting", sighting)
-		sighting.proWhalePick = req.body.sighting.proWhalePick;
+		// sighting.proWhalePick = req.body.sighting.proWhalePick;
 		sighting.proComment = req.body.sighting.proComment;
 		sighting.proApprove = req.body.sighting.proApprove;
 		sighting.save()
