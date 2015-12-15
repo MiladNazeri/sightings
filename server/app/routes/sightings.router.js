@@ -19,7 +19,7 @@ router.post('/', function (req, res, next) {
 })
 
 router.put('/', function (req, res, next) {
-	console.log("req", req)
+
 	console.log("req.body", req.body)
 	Sighting.findById(req.body._id)
 	.then( (sighting) =>{
