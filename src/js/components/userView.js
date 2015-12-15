@@ -46,6 +46,7 @@ export default class Map extends React.Component {
         })
         // console.log("object", object);
         object.map((item) => {
+            if(!item.notAppropriate){
             var marker = Object.assign({},{
                 id: item._id,
                 type: 'Feature',
@@ -67,11 +68,13 @@ export default class Map extends React.Component {
                     }
                 }
             })
+
             if(item.pending){
                 marker.properties.icon.iconUrl = "icons/question.svg";
             }
             // console.log("this is an icon", marker.properties.icon);
             this.state.allMapboxMarkers.push(marker)
+         }
         })
         // console.log("This is the mapbox markers", this.state.allMapboxMarkers)
         myLayer.on('layeradd', function(e) {
@@ -80,7 +83,7 @@ export default class Map extends React.Component {
             if(feature){
                 marker.setIcon(L.icon(feature.properties.icon));
                 if (feature.properties.proComment) {
-                var content = "<div class='title-text'>"+ feature.properties.title+'</div>' + '<img src="'+feature.properties.image+'" alt="" style="width:100%">' + '<br />'+ '<div class="story-content">'+feature.properties.story+'</div>' + '<div class="proComment-content"> Whale Pro Reply: <br />' +feature.properties.proComment+'</div>';
+                var content = "<div class='title-text'>"+ feature.properties.title+'</div>' + '<img src="'+feature.properties.image+'" alt="" style="width:100%">' + '<br />'+ '<div class="story-content">'+feature.properties.story+'</div>' + '<div class="proComment-content"> <strong>Whale Pro Reply:</strong> <br />' +feature.properties.proComment+'</div>';
                 } else {
                     var content = "<div class='title-text'>"+ feature.properties.title+'</div>' + '<img src="'+feature.properties.image+'" alt="" style="width:100%">' + '<br />'+ '<div class="story-content">'+feature.properties.story+'</div>';
 

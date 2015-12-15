@@ -48,6 +48,8 @@ export default class Map extends React.Component {
         })
         // console.log("object", object);
         object.map((item) => {
+            console.log("this is item:", item)
+            if(!item.notAppropriate){
             var marker = Object.assign({},{
                 original: item,
                 id: item._id,
@@ -69,11 +71,13 @@ export default class Map extends React.Component {
                     }
                 }
             })
+
             if(item.pending){
                 marker.properties.icon.iconUrl = "icons/question.svg";
             }
             // console.log("this is an icon", marker.properties.icon);
             this.state.allMapboxMarkers.push(marker)
+        }
         })
         // console.log("This is the mapbox markers", this.state.allMapboxMarkers)
         myLayer.on('layeradd', function(e) {
@@ -122,7 +126,7 @@ export default class Map extends React.Component {
                         return api.getSightings()
                     })
                         .then( (sightings) => {
-                            console.log("Sighting back", sighting)
+                            console.log("Sighting back", sightings)
                             that.state.sightings = sightings.data;
                             that.mapBox.removeLayer(myLayer);
                             myLayer = {};
