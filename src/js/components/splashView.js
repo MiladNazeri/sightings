@@ -37,6 +37,8 @@ export default class Splash extends React.Component {
         this.setState({whaleExpertClick: true})
     }
       submitSignUp(){
+        event.preventDefault()
+
         var signUpObject = {
           email: this.state.signUpEmail,
           password: this.state.signUpPassword,
@@ -176,9 +178,9 @@ export default class Splash extends React.Component {
                                     <h1>Log In</h1>
                                     <h3>Email:</h3>
                                         <input
-                                          type="text"
+                                          type="email"
                                           value={this.state.logInEmail}
-                                          onChange={this.handleChangeTologInUserName} />
+                                          onChange={this.handleChangeTologInEmail} />
                                         <br/>
                                         <h3>Password</h3>
                                         <input
