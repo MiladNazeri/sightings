@@ -3,6 +3,14 @@ var mongoose = require('mongoose')// var Animal =
 ;
 var Sighting = mongoose.model('Sighting');
 
+var ensureAuthenticated = function (req, res, next) {
+    if (req.isAuthenticated()) {
+        next();
+    } else {
+        res.status(401).end();
+    }
+};
+
 router.get('/', function (req, res, next) {
 	Sighting.find()
 		.then(function (sightings) {
@@ -19,7 +27,7 @@ router.post('/', function (req, res, next) {
 		}, next);
 })
 
-router.put('/', function (req, res, next) {
+router.put('/', ensureAuthenticated, function (req, res, next) {
 	console.log("req.body", req.body)
 	Sighting.findById(req.body._id)
 	.then( (sighting) =>{
