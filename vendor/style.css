@@ -272,11 +272,22 @@ a, a:hover{
 	background-color: rgba(255,255,255,0.4);
 }
 
-#splash-logo{
+.splash-logo1{
 	position: absolute;
 	width: 400px;
 	left: calc(50% - 200px);
 	top: 20%;
+
+	transition: 1s ease-in-out;
+}
+
+.splash-logo2{
+	position: absolute;
+	width: 1400px;
+	left: 9999px;
+	top: 20%;
+
+	transition: 1s ease-in-out;
 }
 
 #link-to-sightings{
@@ -292,6 +303,38 @@ a, a:hover{
 	border: 0px solid #FFFFFF;
 	cursor: pointer;
 	width: 200px;
+	text-align: center;
+}
+
+.signUp{
+	position: absolute;
+	top: calc(50% - 21px);
+	left: calc(25% - 210px);
+	font-size: 16px;
+	font-weight: bold;
+	border-radius: 4px;
+	background-color: #5252CA;
+	color: #AAAAAA;
+	border: 0px solid #FFFFFF;
+	cursor: pointer;
+	width: 400px;
+	min-height: 400px;
+	text-align: center;
+}
+
+.logIn{
+	position: absolute;
+	top: calc(50% - 21px);
+	left: calc(75% - 210px);
+	font-size: 16px;
+	font-weight: bold;
+	border-radius: 4px;
+	background-color: #5252CA;
+	color: #AAAAAA;
+	border: 0px solid #FFFFFF;
+	cursor: pointer;
+	width: 400px;
+	height: 400px;
 	text-align: center;
 }
 
@@ -321,4 +364,19 @@ a, a:hover{
 	background-color: #303094;
 	color: #FFFFFF;
 	border: 0px solid #FFFFFF;
+}
+
+
+.pos1 {
+
+
+
+transition: 0.3s ease-in-out;
+}
+
+
+.pos2 {
+
+transition: 0.3s ease-in-out;
+
 }

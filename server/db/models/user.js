@@ -9,17 +9,21 @@ var userSchema = new mongoose.Schema({
         type: String
     },
     email: {
-        type: String
+        type: String,
+        unique: true
     },
     password: {
         type: String
     },
-    sighting: {
-        type: [mongoose.Schema.Types.ObjectId],
-        ref: 'Sighting'
+    organization: {
+        type: String
     },
-
-    group: String,
+    shortBio: {
+        type: String
+    },
+    userName: {
+        type: String
+    },
 
     salt: {
         type: String
@@ -63,8 +67,9 @@ userSchema.set('toJSON', {
             email: ret.email,
             id: ret._id,
             name: ret.name,
-            sighting: ret.sighting,
-            group: ret.group
+            organization: ret.organization,
+            userName: ret.userName,
+            shortBio: ret.shortBio
         };
         return retJson;
     }

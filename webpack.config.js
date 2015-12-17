@@ -10,7 +10,7 @@ module.exports = {
      },
      plugins: [
       new webpack.HotModuleReplacementPlugin(),
-      new webpack.ProvidePlugin({$: "jquery"}) // check if this works before committing, also add in jquery to index.html
+      // new webpack.ProvidePlugin({$: "jquery"}) // check if this works before committing, also add in jquery to index.html
     ],
     resolve: {
         modulesDirectories: ['node_modules'],
