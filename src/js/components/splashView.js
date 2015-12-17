@@ -31,6 +31,7 @@ export default class Splash extends React.Component {
        this.handleChangeTosignUpEmail = this.handleChangeTosignUpEmail.bind(this);
        this.handleChangeTosignUpOrganization = this.handleChangeTosignUpOrganization.bind(this);
        this.handleChangeTosignUpShortBio = this.handleChangeTosignUpShortBio.bind(this);
+       this.handleChangeTosignUpPassword = this.handleChangeTosignUpPassword.bind(this);
     }
     linkToProHandle(e){
         this.setState({whaleExpertClick: true})
