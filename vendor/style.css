@@ -284,8 +284,8 @@ a, a:hover{
 .splash-logo2{
 	position: absolute;
 	width: 1400px;
-	left: 9999px;
-	top: 20%;
+	left: calc(50% - 200px);
+	top: -9999px;
 
 	transition: 1s ease-in-out;
 }
@@ -308,7 +308,7 @@ a, a:hover{
 
 .signUp{
 	position: absolute;
-	top: calc(50% - 21px);
+	top: calc(25% - 21px);
 	left: calc(25% - 210px);
 	font-size: 16px;
 	font-weight: bold;
@@ -324,7 +324,7 @@ a, a:hover{
 
 .logIn{
 	position: absolute;
-	top: calc(50% - 21px);
+	top: calc(25% - 21px);
 	left: calc(75% - 210px);
 	font-size: 16px;
 	font-weight: bold;
