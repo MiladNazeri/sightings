@@ -1,15 +1,15 @@
 import api from "../api/api.js"
 
 module.exports = {
-    signup(email, pass, cb){
+    signup(signUpObject, cb){
         cb = arguments[arguments.length-1]
-        var loginObject = {
-            email: email,
-            password: pass
-         }
-         api.createUser(loginObject)
+         api.createUser(signUpObject)
          .then( (res) => {
             if (res) {
+                var loginObject = {
+                    email: signUpObject.email
+                    password: signUpObject.password
+                }
                 api.loginUser(loginObject)
                 .then((res) => {
                     localStorage.token = res.data.user.id

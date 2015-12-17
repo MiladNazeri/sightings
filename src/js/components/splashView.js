@@ -53,6 +53,30 @@ export default class Splash extends React.Component {
           this.context.history.pushState(null, '/pro')
           } )
         .catch(error => console.log("error ", error))
+
+        var signUpObject = {
+          email: this.state.signUpEmail,
+          password: this.state.signUpPassword,
+          name: this.state.signUpName,
+          organization: this.state.signUpOrganization,
+          shortBio: this.state.signUpShortBio,
+          userName: this.state.signUpUserName
+        }
+        var email = this.state.email;
+        var password = this.state.password;
+        auth.signup(signUpObject, (loggedIn) => {
+          if(!loggedIn)
+            return this.setState({ error: true })
+
+          const { location } = this.props
+
+          if (location.state && location.state.nextPathname) {
+              this.context.history.replaceState(null, location.state.nextPathname)
+          } else {
+              console.log("replaceState dashboard")
+              this.context.history.replaceState(null, '/pro')
+          }
+        })
     }
     submitLogin(){
       event.preventDefault()
@@ -73,6 +97,8 @@ export default class Splash extends React.Component {
         }
 
       })
+
+
 
     }
     componentDidMount(){
