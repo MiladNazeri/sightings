@@ -2,6 +2,12 @@ import axios from 'axios';
 var url = '/api/';
 
 var api = {
+    loginUser(user) {
+        return axios.post('login/', user)
+    },
+    logoutUser() {
+        return axios.get('logout/')
+    },
     getWhales() {
         return axios.get(`${url}whales/`)
     },
@@ -10,6 +16,12 @@ var api = {
     },
     createUser(user) {
         return axios.post(`${url}users/`, user)
+    },
+    getUser(userid) {
+        return axios.get(`${url}/users/${userid}`)
+    },
+    getUsers() {
+        return axios.get(`${url}/users/`)
     },
     getSightings() {
         console.log("Api get sightings")
