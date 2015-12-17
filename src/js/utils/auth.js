@@ -7,7 +7,7 @@ module.exports = {
          .then( (res) => {
             if (res) {
                 var loginObject = {
-                    email: signUpObject.email
+                    email: signUpObject.email,
                     password: signUpObject.password
                 }
                 api.loginUser(loginObject)
