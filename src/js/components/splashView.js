@@ -111,6 +111,11 @@ export default class Splash extends React.Component {
          signUpShortBio: event.target.value
        });
      }
+     handleChangeTosignUpPassword(event) {
+       this.setState({
+         signUpPassword: event.target.value
+       });
+     }
     render() {
         let spashID = (this.state.whaleExpertClick) ? "splash-logo2" : "splash-logo1";
             return (
@@ -131,8 +136,8 @@ export default class Splash extends React.Component {
                                     <h3>User Name:</h3>
                                     <input
                                       type="text"
-                                      value={this.state.username}
-                                      onChange={this.handleChangeToUsername} />
+                                      value={this.state.signUpUserName}
+                                      onChange={this.handleChangeTosignUpUserName} />
                                     <br/>
                                     <h3>Name:</h3>
                                     <input
@@ -160,8 +165,8 @@ export default class Splash extends React.Component {
                                     <h3>Password:</h3>
                                     <input
                                       type="password"
-                                      value={this.state.password}
-                                      onChange={this.handleChangeToPassword} />
+                                      value={this.state.signUpPassword}
+                                      onChange={this.handleChangeTosignUpPassword} />
                                     <br />
                                     <button onClick={this.submitSignUp.bind(this)}>Submit</button>
 
@@ -171,13 +176,13 @@ export default class Splash extends React.Component {
                                     <h3>Email:</h3>
                                         <input
                                           type="text"
-                                          value={this.state.email}
+                                          value={this.state.logInEmail}
                                           onChange={this.handleChangeTologInUserName} />
                                         <br/>
                                         <h3>Password</h3>
                                         <input
                                           type="password"
-                                          value={this.state.password}
+                                          value={this.state.logInPassword}
                                           onChange={this.handleChangeTologInPassword} />
                                         <br />
                                         <button onClick={this.submitLogin.bind(this)}>Submit</button>
