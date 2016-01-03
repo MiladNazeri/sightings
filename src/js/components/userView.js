@@ -251,6 +251,7 @@ export default class Map extends React.Component {
             return (
                 <div>
                     <div id="mapbox" style={styles.mapBox}></div>
+                    <div id = "addButton"><div><Link to="/pro"><img id="addButtonIcon" src="images/mobyPro.png"/></Link></div></div>
                 </div>
             )
     }
