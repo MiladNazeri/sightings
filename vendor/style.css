@@ -381,3 +381,16 @@ transition: 0.3s ease-in-out;
 transition: 0.3s ease-in-out;
 
 }
+
+#splash input {
+	width: 75%;
+}
+
+#splash textarea {
+	width: 75%;
+}
+
+#splash button {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
