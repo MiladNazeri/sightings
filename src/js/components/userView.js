@@ -44,7 +44,7 @@ class Map extends React.Component {
         })
         // ("object", object);
         object.map((item) => {
-            console.log("item", item)
+            // console.log("item", item)
             if(!item.notAppropriate){
             var marker = Object.assign({},{
                 id: item._id,
@@ -78,11 +78,11 @@ class Map extends React.Component {
          }
         })
         function whalePick(whale = "Andrew’s Beaked Whale", object){
-        console.log("that.state.whaleOptions",that.state.whaleOptions)
+        // console.log("that.state.whaleOptions",that.state.whaleOptions)
         let whaleIndex = that.state.whaleOptions.indexOf(whale);
-        console.log("whale", whale)
-        console.log("whaleIndex", whaleIndex)
-        console.log("object", object)
+        // console.log("whale", whale)
+        // console.log("whaleIndex", whaleIndex)
+        // console.log("object", object)
         return object[whaleIndex].referenceImage;
         }
         var that = this;
@@ -91,19 +91,21 @@ class Map extends React.Component {
             var marker = e.layer,
             feature = marker.feature;
             if(feature){
-                console.log("feature", feature)
+                // console.log("feature", feature)
                 marker.setIcon(L.icon(feature.properties.icon));
                 if (feature.properties.proComment) {
-                var content = "<div class='title-text'>"+ feature.properties.title+'</div>' + '<img src="'+feature.properties.image+'" alt="" style="width:100%">' + '<br />'+ '<div class="story-content">'+feature.properties.story+'</div><div class="whale-options"> They think they saw a: </br>'+ feature.properties.userWhalePick +'</div><div class="whale-image"><img id="whalePicImage" src="' + whalePick(feature.properties.userWhalePick, that.props.whales) + '" /></div>'
-                '<div class="proComment-content"> <strong>Whale Pro Reply:</strong> <br />' +feature.properties.proComment+'</div>';
+                var content = "<div class='row'><div class='col-md-6'><div class='title-text'>"+ feature.properties.title+'</div>' + '<img src="'+feature.properties.image+'" alt="" style="width:100%">' + '<br />'+ '<div class="story-content">'+feature.properties.story+'</div><div class="whale-options"> They think they saw a: </br>'+ feature.properties.userWhalePick +'</div><div class="whale-image"><img id="whalePicImage" src="' + whalePick(feature.properties.userWhalePick, that.props.whales) + '" /></div></div>'
+                    content = content + "<div class='col-md-6'><div class=proComment-content> <strong>Whale Pro Reply:</strong> <br />" +feature.properties.proComment+'</div>';
                     if(feature.properties.proWhalePick) {
-                        content = content + '<div class="whale-options"> The Pro thinks it was a: </br>'+ feature.properties.proWhalePick +'</div><div class="whale-image"><img id="whalePicImage" src="' + whalePick(feature.properties.proWhalePick, that.props.whales) + '" /></div>'
+                        content = content + '<div class="whale-options"> The Pro thinks it was a: </br>'+ feature.properties.proWhalePick +'</div><div class="whale-image"><img id="whalePicImage" src="' + whalePick(feature.properties.proWhalePick, that.props.whales) + '" /></div></div></div>'
                     }
                 } else {
-                    var content = "<div class='title-text'>"+ feature.properties.title+'</div>' + '<img src="'+feature.properties.image+'" alt="" style="width:100%">' + '<br />'+ '<div class="story-content">'+feature.properties.story+'</div>';
+                    var content = "<div class='row'><div class='col-md-6'><div class='title-text'>"+ feature.properties.title + '</div><img src="' +feature.properties.image + '" alt="" style="width:100%"><br /><div class="story-content">' + feature.properties.story + '</div></div><div class="col-md-6"><div class="whale-options"> They think they saw a: </br>' + feature.properties.userWhalePick + '</div><div class="whale-image"><img id="whalePicImage" src="' + whalePick(feature.properties.userWhalePick, that.props.whales) + '" /></div></div></div>';
 
                 }
-                marker.bindPopup(content);
+                var popup = L.popup({keepInView: true, minWidth:600})
+                    .setContent(content)
+                marker.bindPopup(popup);
             }
         });
         myLayer.setGeoJSON(this.state.allMapboxMarkers)
@@ -117,15 +119,15 @@ class Map extends React.Component {
 	}
 
     componentWillMount() {
-        console.log("this.props.whales", this.props.whales)
+        // console.log("this.props.whales", this.props.whales)
         const whaleList = this.props.whales.map( (whale) => {
             return whale.whaleName
         })
-        console.log("whaleList", whaleList)
+        // console.log("whaleList", whaleList)
         this.setState({
             whaleOptions: whaleList
         })
-        console.log("whaleOptions", this.state.whaleOptions)
+        // console.log("whaleOptions", this.state.whaleOptions)
     }
 
 
@@ -141,14 +143,14 @@ class Map extends React.Component {
     	that.mapBox.on('click', addMarker);
     	myLayer = L.mapbox.featureLayer().addTo(that.mapBox);
         var userForm = {}
-        userForm.Title = "<div class='title-text'>Title of your sighting</div><input id='form-title' type='text'/>";
+        userForm.Title = "<div class='row'><div class='col-md-6'><div class='title-text'>Title of your sighting</div><input id='form-title' type='text'/>";
         userForm.LatLng = "";
         userForm.Picture = "<div class='picture-text'>Share your sighting</div><input id='form-picture' type='file'>";
         userForm.Story = "<div class='story-text'>Story behind this sighting</div><textarea class='story-content' id='form-story'></textarea>";
-        userForm.userWhalePick = "<div class='whale-Options'>Choose which whale you think you saw</div><select id='whaleSelect'>" + that.state.whaleOptions.map( (whale) => {
+        userForm.userWhalePick = "</div><div class='col-md-6'><div class='whale-Options'>Choose which whale you think you saw</div><select id='whaleSelect'>" + that.state.whaleOptions.map( (whale) => {
             return "<option value=" + JSON.stringify(whale) + ">" + JSON.stringify(whale) +  "</option>" }) + "</select>";
         userForm.userWhalePickImage = "<div class='whale-image'><img id='whalePicImage' src='" + whalePick($("#whaleSelect").val(), that.props.whales) + "' /></div>"
-        userForm.submitButton = "<div class='button-container'><button id='submit-form'>submit</button>";
+        userForm.submitButton = "<div class='button-container'><button id='submit-form'>submit</button></div></div>";
         $('body').on('change', '#whaleSelect', function(){
 
             $('#whalePicImage').attr("src", whalePick($(this).val(), that.props.whales))
@@ -235,7 +237,7 @@ class Map extends React.Component {
                 for (var element in userForm){
                     popupContent = popupContent + userForm[element];
                 }
-                var popup = L.popup({keepInView: true, maxHeight: 500})
+                var popup = L.popup({keepInView: true, minWidth:600})
                     .setContent(popupContent)
                 newMarker.bindPopup(popup);
                 newMarker.openPopup();
@@ -252,7 +254,7 @@ class Map extends React.Component {
                 for (var element in userForm){
                     popupContent = popupContent + userForm[element];
                 }
-                var popup = L.popup({keepInView: true, maxHeight: 500})
+                var popup = L.popup({keepInView: true, minWidth:600})
                     .setContent(popupContent)
                 newMarker.bindPopup(popup);
                 newMarker.openPopup();

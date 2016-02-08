@@ -50,7 +50,7 @@ class Map extends React.Component {
         })
         // console.log("object", object);
         object.map((item) => {
-            console.log("this is item:", item)
+            // console.log("this is item:", item)
             if(!item.notAppropriate){
             var marker = Object.assign({},{
                 original: item,
@@ -83,27 +83,27 @@ class Map extends React.Component {
         }
         })
         function whalePick(whale = "Andrew’s Beaked Whale", object){
-        console.log("that.state.whaleOptions",that.state.whaleOptions)
+        // console.log("that.state.whaleOptions",that.state.whaleOptions)
         let whaleIndex = that.state.whaleOptions.indexOf(whale);
-        console.log("whale", whale)
-        console.log("whaleIndex", whaleIndex)
-        console.log("object", object)
+        // console.log("whale", whale)
+        // console.log("whaleIndex", whaleIndex)
+        // console.log("object", object)
         return object[whaleIndex].referenceImage;
         }
         // console.log("This is the mapbox markers", this.state.allMapboxMarkers)
         myLayer.on('layeradd', function(e) {
             var marker = e.layer,
             feature = marker.feature;
-            console.log(marker);
+            // console.log(marker);
             if(feature){
                 marker.setIcon(L.icon(feature.properties.icon));
-                var content = "<div class='title-text'>"+ feature.properties.title+'</div>' + '<img src="'+feature.properties.image+'" alt="" style="width:100%">' + '<br />'+ '<div class="story-content">'+feature.properties.story+'</div><div class="whale-options"> They think they saw a: </br>'+ feature.properties.userWhalePick +'</div><div class="whale-image"><img id="whalePicImage2" src="' + whalePick(feature.properties.userWhalePick, that.props.whales) + '" /></div>';
-                content = content + "<div class='reply-text'>Reply</div><textarea class='reply-content' id='reply-form-"+marker.feature.id+"' style='width:100%'></textarea>";
+                var content = "<div class='row'><div class='col-md-6'><div class='title-text'>"+ feature.properties.title+'</div>' + '<img src="'+feature.properties.image+'" alt="" style="width:100%">' + '<br />'+ '<div class="story-content">'+feature.properties.story+'</div><div class="whale-options"> They think they saw a: </br>'+ feature.properties.userWhalePick +'</div><div class="whale-image"><img id="whalePicImage2" src="' + whalePick(feature.properties.userWhalePick, that.props.whales) + '" /></div></div>';
+                content = content + "<div class='col-md-6'><div class='reply-text'>Reply</div><textarea class='reply-content' id='reply-form-"+marker.feature.id+"' style='width:100%'></textarea>";
                 content = content + "<div class='whale-Options'>Choose which whale you think they saw</div><select id='whaleSelect'>" + that.state.whaleOptions.map( (whale) => {
                     return "<option value=" + JSON.stringify(whale) + ">" + JSON.stringify(whale) +  "</option>" }) + "</select>";
                     content = content + "<div class='whale-image'><img id='whalePicImage' src='" + whalePick($("#whaleSelect").val(), that.props.whales) + "' /></div>"
-                content = content + "<div class='button-container'>"+"<button class='reject-button'id='reject-form-"+marker.feature.id+"'>Reject</button>"+"<button class='approve-button'id='approve-form-"+marker.feature.id+"'>Approve</button>"+"</div>";
-                var popup = L.popup({keepInView: true})
+                content = content + "<div class='button-container'>"+"<button class='reject-button'id='reject-form-"+marker.feature.id+"'>Reject</button>"+"<button class='approve-button'id='approve-form-"+marker.feature.id+"'>Approve</button>"+"</div></div></div>";
+                var popup = L.popup({keepInView: true, minWidth:600})
                     .setContent(content)
                 marker.bindPopup(popup);
                 $('body').on('change', '#whaleSelect', function(){
@@ -139,13 +139,13 @@ class Map extends React.Component {
                     rejectedSighting.notAppropriate = true;
                     rejectedSighting.proApprove = false;
                     rejectedSighting.proWhalePick = $("#whaleSelect").val();
-                    console.log("rejected sighting", rejectedSighting);
+
                      that.props.updateSighting(rejectedSighting)
                     .then((sighting) => {
 
                     })
                         .then( (sightings) => {
-                            console.log("Sighting back", sightings)
+
 
                             that.mapBox.removeLayer(myLayer);
                             myLayer = {};
@@ -185,15 +185,15 @@ class Map extends React.Component {
     })
   }
     componentWillMount() {
-        console.log("this.props.whales", this.props.whales)
+        // console.log("this.props.whales", this.props.whales)
         const whaleList = this.props.whales.map( (whale) => {
             return whale.whaleName
         })
-        console.log("whaleList", whaleList)
+        // console.log("whaleList", whaleList)
         this.setState({
             whaleOptions: whaleList
         })
-        console.log("whaleOptions", this.state.whaleOptions)
+        // console.log("whaleOptions", this.state.whaleOptions)
     }
 
     componentDidMount() {

@@ -256,7 +256,7 @@ var whaleData = [
 
 export default function(state = whaleData, action) {
     switch(action.type){
-        default:
-            return state;
+    default:
+        return state;
     }
 }

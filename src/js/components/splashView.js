@@ -30,7 +30,7 @@ class Splash extends React.Component {
         this.setState({whaleExpertClick: true})
     }
     linkToSightingsHandle(e){
-      console.log(this.context)
+      // console.log(this.context)
         this.props.history.pushState(null, "/sightings");
     }
     componentDidMount(){

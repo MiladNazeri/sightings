@@ -115,7 +115,7 @@ a, a:hover{
 
 .leaflet-popup{
 
-	min-width: 200px;
+	width: 600px;
 }
 
 .leaflet-popup-content-wrapper{
@@ -198,8 +198,11 @@ a, a:hover{
 }
 
 .button-container{
-	width: 100%;
-	text-align: center;
+	display: block;
+	width: 300px;
+	left: 25%;
+	right: 25%;
+	margin: 0 auto;
 }
 
 #submit-form{
@@ -221,20 +224,21 @@ a, a:hover{
 }
 
 .reply-text{
-	width: 100%;
+	width: 300px;
 	font-size: 14px;
 	font-weight: bold;
 	margin-bottom: 5px;
 }
 
 .reply-content{
-	width: 100%;
-	min-height: 48px;
+	width: 300px;
+	min-height: 80px;
 	border-radius: 2px;
 	margin-bottom: 10px;
 }
 
 .reject-button{
+	display: inline-block;
 	font-size: 12px;
 	height: 28px;
 	border-radius: 4px;
@@ -242,9 +246,8 @@ a, a:hover{
 	color: #FFFFFF;
 	border: 0px solid #FFFFFF;
 	cursor: pointer;
-	width: 80px;
+	width: 115px;
 	text-align: center;
-	margin-right: 5px;
 }
 
 .reject-button:hover{
@@ -254,6 +257,8 @@ a, a:hover{
 }
 
 .approve-button{
+	display: inline-block;
+	float:right;
 	font-size: 12px;
 	height: 28px;
 	border-radius: 4px;
@@ -261,9 +266,11 @@ a, a:hover{
 	color: #FFFFFF;
 	border: 0px solid #FFFFFF;
 	cursor: pointer;
-	width: 80px;
+	width: 115px;
 	text-align: center;
 	margin-left: 5px;
+	margin-right: 60px;
+
 }
 
 .approve-button:hover{

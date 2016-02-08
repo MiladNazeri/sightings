@@ -17,11 +17,12 @@ function requireAuth(nextState, replaceState) {
 function checkAuth(nextState, replaceState) {
     api.getSession()
     .then( (results) => {
+        console.log("session results", results)
         if(!results.data.user){
              delete localStorage.token
         }
 
-        if (!!results.data.user) {
+        if (auth.loggedIn()) {
             auth.logout();
         }
     })
