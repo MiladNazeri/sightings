@@ -2,6 +2,9 @@ import axios from 'axios';
 var url = '/api/';
 
 var api = {
+    getSession() {
+        return axios.get('session/')
+    },
     loginUser(user) {
         return axios.post('login/', user)
     },

@@ -34,17 +34,7 @@ module.exports = {
             email: email,
             password: pass
         }
-        api.loginUser(loginObject)
-        .then( (res) => {
-            if (res) {
-                localStorage.token = res.data.user.id
-                if (cb) cb(true)
-                this.onChange(true)
-            } else {
-                if (cb) cb(false)
-                this.onChange(false)
-            }
-        })
+
     },
     getToken(){
         return localStorage.token

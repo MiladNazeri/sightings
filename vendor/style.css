@@ -114,6 +114,7 @@ a, a:hover{
 }
 
 .leaflet-popup{
+
 	min-width: 200px;
 }
 
@@ -169,6 +170,31 @@ a, a:hover{
 	min-height: 48px;
 	border-radius: 2px;
 	margin-bottom: 10px;
+}
+
+.whale-Options{
+		width: 100%;
+		font-size: 14px;
+		font-weight: bold;
+		margin-bottom: 5px;
+	border-radius: 2px;
+
+}
+
+#whalePicImage{
+	width: 100%;
+	max-height: 300px;
+	border-radius: 2px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+#whalePicImage2{
+	width: 100%;
+	max-height: 300px;
+	border-radius: 2px;
+	margin-bottom: 10px;
+	margin-top: 10px;
 }
 
 .button-container{
@@ -264,6 +290,7 @@ a, a:hover{
 	background-size: cover;
 }
 
+
 #splash-overlay{
 	position: absolute;
 	width: 100%;
@@ -275,31 +302,144 @@ a, a:hover{
 
 .splash-logo1{
 	position: absolute;
-	width: 400px;
-	left: calc(50% - 200px);
-	top: 20%;
+	width: 50%;
+	left: 25%;
+	right: 25%;
+	top: 0%;
 
-	transition: 1s ease-in-out;
+	transition: 2s ease-in-out;
 }
 
 .splash-logo2{
 	position: absolute;
-	width: 1400px;
+	width: 0px;
 	left: calc(50% - 200px);
-	top: -9999px;
+	top: +9999px;
 
+	transition: 2s ease-in-out;
+}
+
+
+
+.signUp{
+	padding: 20px;
+	position: absolute;
+	top: -9999px;
+	left: calc(32% - 210px);
+	font-size: 16px;
+	font-weight: bold;
+	border-radius: 24px;
+	margin: 0 auto;
+	background-color: #2A61BA;
+	color: #FFFFFF;
+	border: 0px solid #FFFFFF;
+	cursor: pointer;
+	width: 400px;
+	min-height: 400px;
+	text-align: center;
+	transition: 1s ease-in-out;
+}
+.signUp2{
+	padding: 20px;
+	position: absolute;
+	top: calc(15% - 21px);
+	left: calc(32% - 210px);
+	font-size: 16px;
+	font-weight: bold;
+	border-radius: 24px;
+	margin: 0 auto;
+	background-color: #2A61BA;
+	color: #FFFFFF;
+	border: 0px solid #FFFFFF;
+	cursor: pointer;
+	width: 400px;
+	min-height: 400px;
+	text-align: center;
 	transition: 1s ease-in-out;
 }
 
+.signUp button {
+
+	padding: 10px;
+	border-radius: 24px;
+	background-color: #FFFFFF;
+	color: #2A61BA;
+	cursor: pointer;
+	border: 0px solid #FFFFFF;
+	width: 200px;
+}
+
+.logIn button {
+	padding: 10px;
+	border-radius: 24px;
+	background-color: #FFFFFF;
+	color: #2A61BA;
+	cursor: pointer;
+	border: 0px solid #FFFFFF;
+	width: 200px;
+}
+.signUp button:hover {
+
+	padding: 10px;
+	border-radius: 24px;
+	background-color: #2A61BA;
+	color: #FFFFFF;
+	cursor: pointer;
+	width: 200px;
+}
+
+.logIn button:hover {
+	padding: 10px;
+	border-radius: 24px;
+	background-color: #2A61BA;
+	color: #FFFFFF;
+	cursor: pointer;
+	width: 200px;
+}
+
+.logIn{
+	padding: 20px;
+	position: absolute;
+	top: -9999px;
+	left: calc(68% - 210px);
+	font-size: 16px;
+	font-weight: bold;
+	border-radius: 24px;
+	background-color: #2A61BA;
+	color: #FFFFFF;
+	border: 0px solid #FFFFFF;
+	cursor: pointer;
+	width: 400px;
+	height: 100%;
+	text-align: center;
+	transition: 1s ease-in-out;
+}
+.logIn2{
+	padding: 20px;
+	position: absolute;
+	top: calc(15% - 21px);
+	left: calc(68% - 210px);
+	font-size: 16px;
+	font-weight: bold;
+	border-radius: 24px;
+	background-color: #2A61BA;
+	color: #FFFFFF;
+	border: 0px solid #FFFFFF;
+	cursor: pointer;
+	width: 400px;
+	min-height: 100px;
+	text-align: center;
+	transition: 1s ease-in-out;
+}
 #link-to-sightings{
 	position: absolute;
-	top: calc(60% - 21px);
+	top: calc(60% - 1px);
 	left: calc(50% - 210px);
 	font-size: 16px;
 	font-weight: bold;
 	height: 42px;
-	border-radius: 4px;
-	background-color: #5252CA;
+	border-radius: 24px;
+	background-color: #2A61BA;
 	color: #FFFFFF;
 	border: 0px solid #FFFFFF;
 	cursor: pointer;
@@ -307,53 +447,21 @@ a, a:hover{
 	text-align: center;
 }
 
-.signUp{
-	position: absolute;
-	top: calc(25% - 21px);
-	left: calc(25% - 210px);
-	font-size: 16px;
-	font-weight: bold;
-	border-radius: 4px;
-	background-color: #5252CA;
-	color: #AAAAAA;
-	border: 0px solid #FFFFFF;
-	cursor: pointer;
-	width: 400px;
-	min-height: 400px;
-	text-align: center;
-}
-
-.logIn{
-	position: absolute;
-	top: calc(25% - 21px);
-	left: calc(75% - 210px);
-	font-size: 16px;
-	font-weight: bold;
-	border-radius: 4px;
-	background-color: #5252CA;
-	color: #AAAAAA;
-	border: 0px solid #FFFFFF;
-	cursor: pointer;
-	width: 400px;
-	height: 400px;
-	text-align: center;
-}
-
 #link-to-sightings:hover{
-	background-color: #303094;
-	color: #FFFFFF;
+	background-color: #FFFFFF;
+	color: #2A61BA;
 	border: 0px solid #FFFFFF;
 }
 
 #link-to-pro{
 	position: absolute;
-	top: calc(60% - 21px);
+	top: calc(60% - 1px);
 	right: calc(50% - 210px);
 	font-size: 16px;
 	font-weight: bold;
 	height: 42px;
-	border-radius: 4px;
-	background-color: #5252CA;
+	border-radius: 24px;
+	background-color: #2A61BA;
 	color: #FFFFFF;
 	border: 0px solid #FFFFFF;
 	cursor: pointer;
@@ -362,8 +470,8 @@ a, a:hover{
 }
 
 #link-to-pro:hover{
-	background-color: #303094;
-	color: #FFFFFF;
+	background-color: #FFFFFF;
+	color: #2A61BA;
 	border: 0px solid #FFFFFF;
 }
 
@@ -384,13 +492,22 @@ transition: 0.3s ease-in-out;
 
 #splash input {
 	width: 75%;
+	margin: 0 auto;
+}
+#splash textarea {
+	width: 75%;
+	margin: 0 auto;
 }
 
 #splash textarea {
 	width: 75%;
+}
+#splash h1 {
+	margin-bottom: 20px;
 }
 
 #splash button {
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
+

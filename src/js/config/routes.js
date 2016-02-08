@@ -1,24 +1,34 @@
-var React = require('react');
-var Router = require('react-router');
-var Route = Router.Route;
-var IndexRoute = Router.IndexRoute;
-
+import React from 'react';
+import { Route, IndexRoute } from 'react-router';
 
 import App from '../components/app';
 import Splash from '../components/splashView';
 import User from '../components/userView';
 import Pro from '../components/proView';
 import Error from '../components/error';
-import auth from "../utils/auth.js"
+import auth from "../utils/auth.js";
+import api from "../api/api.js";
 
 function requireAuth(nextState, replaceState) {
     if(!auth.loggedIn())
         replaceState({ nextPathname: nextState.location.pathname}, '/')
 }
 
+function checkAuth(nextState, replaceState) {
+    api.getSession()
+    .then( (results) => {
+        if(!results.data.user){
+             delete localStorage.token
+        }
 
-module.exports = (
-  <Route path="/" component={App}>
+        if (!!results.data.user) {
+            auth.logout();
+        }
+    })
+}
+
+export default (
+  <Route path="/" component={App} onEnter={checkAuth} >
     <IndexRoute component={Splash} />
     <Route path="/sightings" component={User} />
     <Route path="/pro" component={Pro} onEnter={requireAuth} />
