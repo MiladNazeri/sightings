@@ -16,9 +16,8 @@ class LogIn extends React.Component {
         router: PropTypes.object,
         location: PropTypes.object,
         history: PropTypes.object
-    }
+    };
     onSubmitLogin(props) {
-        console.log(props)
         event.preventDefault();
         this.props.loginUser(props);
     }
