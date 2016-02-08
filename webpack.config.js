@@ -2,7 +2,9 @@ var webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
-     entry: "./src/js/main",
+     entry: ["./src/js/main",
+     'webpack-hot-middleware/client'
+     ],
      output: {
           path: '/public/',
           filename: "bundle.js",
@@ -10,44 +12,15 @@ module.exports = {
      },
      plugins: [
       new webpack.HotModuleReplacementPlugin(),
-      // new webpack.ProvidePlugin({$: "jquery"}) // check if this works before committing, also add in jquery to index.html
-    ],
-    resolve: {
-        modulesDirectories: ['node_modules'],
-        alias: {},
-        extensions: ['', '.jsx', '.js']
-      },
+        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoErrorsPlugin(),
+      ],
     module: {
       loaders: [{
-          test: /\.(js|jsx|babel)$/,
+          test: /\.(js|jsx|babel|json)$/,
           exclude: /(node_modules|bower_components)/,
-          // saving the "include" properties in case we need them later
-          //include: "/Users/Amit/Dropbox/Coding/FullStack/sightings/node_modules/react-googlemaps/src/ui/components/*.js",
-          // include: [
-          //   path.resolve(__dirname, 'server'),
-          //   path.resolve(__dirname, 'src'),
-          //   path.resolve(__dirname, 'tests'),
-          //   path.resolve(__dirname, 'node_modules/react-googlemaps')
-          // ],
           loaders: ['react-hot', 'babel', 'babel-loader'],
         }]
       },
-      // saving this just in case we need it for some reason
-      // resolveLoader: {
-      //   moduleDirectories: [
-      //     '/Users/Amit/dropbox/coding/fullstack/sightings/node_modules'
-      //   ]
-      // }
-    //  module: {
-    //       loaders: [
-    //            {
-    //                 test: /\.jsx?$/,
-    //                 exclude: /(node_modules|bower_components)/,
-    //                 loader: 'babel',
-    //                 query: {
-    //                      presets: ['es2015', 'react']
-    //                 }
-    //            }
-    //       ]
-    //  }
 };

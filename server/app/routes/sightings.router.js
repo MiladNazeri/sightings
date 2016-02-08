@@ -34,6 +34,7 @@ router.put('/', ensureAuthenticated, function (req, res, next) {
 		console.log("sighting", sighting)
 		// sighting.proWhalePick = req.body.sighting.proWhalePick;
 		sighting.proComment = req.body.proComment;
+		sighting.proWhalePick = req.body.proWhalePick;
 		sighting.proApprove = req.body.proApprove;
 		sighting.pending = req.body.pending;
 		sighting.notAppropriate = req.body.notAppropriate;

@@ -3,7 +3,6 @@ var webpack = require('webpack');
 console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! this is being run")
 
 module.exports = {
-  devtool: 'source-map',
   entry: './src/js/main',
   output: {
     path:  path.join(__dirname, 'public'),
@@ -11,6 +10,8 @@ module.exports = {
     publicPath: '/public/'
   },
   plugins: [
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       minimize: true,
       compress: {

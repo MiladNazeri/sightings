@@ -5,7 +5,7 @@ import api from '../api/api.js';
 import axios from 'axios';
 import ReactSelect from 'react-select';
 import helper from '../utils/helper.js'
-var $ = require('jquery-latest');
+var $ = require('jquery');
 
 export default class Map extends React.Component {
     render() {

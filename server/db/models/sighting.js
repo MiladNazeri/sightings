@@ -40,8 +40,10 @@ var sightingSchema = new mongoose.Schema({
 		default: true
 	},
 	proWhalePick: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Whale'
+		type: String,
+	},
+	userWhalePick: {
+		type: String,
 	},
 	proComment: {
 		type: String

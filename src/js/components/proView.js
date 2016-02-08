@@ -5,9 +5,11 @@ import api from '../api/api.js';
 import axios from 'axios';
 import ReactSelect from 'react-select';
 import helper from '../utils/helper.js'
-var $ = require('jquery-latest');
+var $ = require('jquery');
+import { connect } from 'react-redux';
+import { getSightings, createSighting, updateSighting } from '../actions/app-actions.js'
 
-export default class Map extends React.Component {
+class Map extends React.Component {
 
     constructor(props) {
         super(props)
@@ -62,6 +64,7 @@ export default class Map extends React.Component {
                     "title":item.title,
                     "image":item.photo,
                     "story":item.story,
+                    "userWhalePick":item.userWhalePick,
                     "icon": {
                         "iconUrl": "icons/whale.svg",
                         "iconSize": [50, 50], // size of the icon
@@ -79,6 +82,14 @@ export default class Map extends React.Component {
             this.state.allMapboxMarkers.push(marker)
         }
         })
+        function whalePick(whale = "Andrew’s Beaked Whale", object){
+        console.log("that.state.whaleOptions",that.state.whaleOptions)
+        let whaleIndex = that.state.whaleOptions.indexOf(whale);
+        console.log("whale", whale)
+        console.log("whaleIndex", whaleIndex)
+        console.log("object", object)
+        return object[whaleIndex].referenceImage;
+        }
         // console.log("This is the mapbox markers", this.state.allMapboxMarkers)
         myLayer.on('layeradd', function(e) {
             var marker = e.layer,
@@ -86,27 +97,34 @@ export default class Map extends React.Component {
             console.log(marker);
             if(feature){
                 marker.setIcon(L.icon(feature.properties.icon));
-                var content = "<div class='title-text'>"+ feature.properties.title+'</div>' + '<img src="'+feature.properties.image+'" alt="" style="width:100%">' + '<br />'+ '<div class="story-content">'+feature.properties.story+'</div>';
+                var content = "<div class='title-text'>"+ feature.properties.title+'</div>' + '<img src="'+feature.properties.image+'" alt="" style="width:100%">' + '<br />'+ '<div class="story-content">'+feature.properties.story+'</div><div class="whale-options"> They think they saw a: </br>'+ feature.properties.userWhalePick +'</div><div class="whale-image"><img id="whalePicImage2" src="' + whalePick(feature.properties.userWhalePick, that.props.whales) + '" /></div>';
                 content = content + "<div class='reply-text'>Reply</div><textarea class='reply-content' id='reply-form-"+marker.feature.id+"' style='width:100%'></textarea>";
+                content = content + "<div class='whale-Options'>Choose which whale you think they saw</div><select id='whaleSelect'>" + that.state.whaleOptions.map( (whale) => {
+                    return "<option value=" + JSON.stringify(whale) + ">" + JSON.stringify(whale) +  "</option>" }) + "</select>";
+                    content = content + "<div class='whale-image'><img id='whalePicImage' src='" + whalePick($("#whaleSelect").val(), that.props.whales) + "' /></div>"
                 content = content + "<div class='button-container'>"+"<button class='reject-button'id='reject-form-"+marker.feature.id+"'>Reject</button>"+"<button class='approve-button'id='approve-form-"+marker.feature.id+"'>Approve</button>"+"</div>";
-                marker.bindPopup(content);
+                var popup = L.popup({keepInView: true})
+                    .setContent(content)
+                marker.bindPopup(popup);
+                $('body').on('change', '#whaleSelect', function(){
+
+                    $('#whalePicImage').attr("src", whalePick($(this).val(), that.props.whales))
+                })
+
+
                 $("body").on("click", "#approve-form-"+marker.feature.id, function(e){
                     var approvedSighting = marker.feature.original
                     approvedSighting.proComment = $("#reply-form-"+marker.feature.id).val();
                     approvedSighting.pending = false;
                     approvedSighting.notAppropriate = false;
-                    approvedSighting.proApprove = true;
-                    console.log("approved sighting", approvedSighting);
-                    console.log("that", that)
-                    api.updateSighting(approvedSighting)
+                    approvedSighting.proWhalePick = $("#whaleSelect").val();
+                    that.props.updateSighting(approvedSighting)
                     .then((sighting) => {
-                        console.log("update sighting", sighting)
-                        return api.getSightings()
+
+
                     })
                         .then( (sightings) => {
-                            console.log("that 2", that)
-                            console.log("Sighting back", sightings)
-                            that.state.sightings = sightings.data;
+
                             that.mapBox.removeLayer(myLayer);
                             myLayer = {};
                             newMarker = false;
@@ -120,14 +138,15 @@ export default class Map extends React.Component {
                     rejectedSighting.pending = false;
                     rejectedSighting.notAppropriate = true;
                     rejectedSighting.proApprove = false;
+                    rejectedSighting.proWhalePick = $("#whaleSelect").val();
                     console.log("rejected sighting", rejectedSighting);
-                    api.updateSighting(rejectedSighting)
+                     that.props.updateSighting(rejectedSighting)
                     .then((sighting) => {
-                        return api.getSightings()
+
                     })
                         .then( (sightings) => {
                             console.log("Sighting back", sightings)
-                            that.state.sightings = sightings.data;
+
                             that.mapBox.removeLayer(myLayer);
                             myLayer = {};
                             newMarker = false;
@@ -142,7 +161,7 @@ export default class Map extends React.Component {
     }
     _showAllSightings(mapBox, myLayer){
         // console.log("initiating map", this.state)
-        this._setMarkersOnMap(mapBox, myLayer, this.state.sightings)
+        this._setMarkersOnMap(mapBox, myLayer, this.props.sightings)
     }
     _getSightings(){
         // console.log(this);
@@ -165,6 +184,17 @@ export default class Map extends React.Component {
       proComment: e.target.value
     })
   }
+    componentWillMount() {
+        console.log("this.props.whales", this.props.whales)
+        const whaleList = this.props.whales.map( (whale) => {
+            return whale.whaleName
+        })
+        console.log("whaleList", whaleList)
+        this.setState({
+            whaleOptions: whaleList
+        })
+        console.log("whaleOptions", this.state.whaleOptions)
+    }
 
     componentDidMount() {
         var that = this;
@@ -174,21 +204,10 @@ export default class Map extends React.Component {
         var newMarker;
         that.mapBox = L.mapbox.map('mapbox', 'geng0610.odfm6c8b').setView([40.718243, -73.99868], 14);
         myLayer = L.mapbox.featureLayer().addTo(that.mapBox);
-        api.getWhales()
-        .then( (whales) => {
-            var whaleOptions = helper._optionMaker(whales.data, whales.data.id, whales.data.whaleName)
-            this.setState({
-            whales: whales.data,
-            whaleOptions: whaleOptions
-            });
-        });
-        api.getSightings()
-        .then( (sightings) => {
-            this.setState({
-            sightings: sightings.data
-            });
-            this._showAllSightings(this.mapBox, myLayer);
-        });
+       that.props.getSightings()
+        .then( () => {
+             this._showAllSightings(this.mapBox, myLayer);
+        })
 
     }
     componentWillUnmount() {
@@ -204,6 +223,16 @@ export default class Map extends React.Component {
     }
 
 }
+
+
+
+function mapStateToProps(state) {
+    return { sightings: state.sightings,
+    whales: state.whales};
+}
+
+export default connect(mapStateToProps, {getSightings, createSighting, updateSighting})(Map);
+
 
 var styles = {
   map: {
